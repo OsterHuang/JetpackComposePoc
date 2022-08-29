@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">Jetpack Compose POC</string>
+
+    <!-- Common -->
+    <string name="back">Back</string>
+
+    <string name="splash_copyright">Powered by Cathay United Bank Cambodia.\n© All rights reserved.</string>
+    <string name="login">Login</string>
+
+    <!-- Register -->
+    <string name="register">Register</string>
+    <string name="register_terms">Register Terms</string>
+    <string name="register_ocr">Register OCR</string>
+    <string name="register_personal">Register Personal</string>
+    <string name="go_register">Go Register</string>
+
+    <!-- Apply mobile bank -->
+    <string name="apply_mobile_bank">Apply Mobile Bank</string>
+    <string name="apply_mobile_bank_verify_info">Apply Mobile Bank Verify Info</string>
+    <string name="apply_mobile_bank_terms">Apply Mobile Bank Terms</string>
+    <string name="apply_mobile_bank_security_info">Apply Mobile Bank Security Info</string>
+
+    <!-- Home -->
+    <string name="home">Home</string>
+    <string name="account">Account</string>
+
+    <!-- Account -->
+    <string name="my_account">My Account</string>
+
+    <!-- location -->
+    <string name="location">Location</string>
+
+    <!-- service -->
+    <string name="service">Service</string>
+
+    <!-- transfer -->
+    <string name="transfer">Transfer</string>
+
+</resources>
