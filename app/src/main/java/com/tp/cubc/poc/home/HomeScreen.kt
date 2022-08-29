@@ -1,5 +1,6 @@
 package com.tp.cubc.poc.home
 
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
@@ -8,13 +9,24 @@ import com.tp.cubc.poc.home.layout.HomeLayout
 import com.tp.cubc.poc.home.layout.HomeTopBar
 
 @Composable
-fun HomeScreen(homeIndexRouter: HomeIndexRouter) {
+fun HomeScreen(
+    homeIndexRouter: HomeIndexRouter,
+    goTransfer: () -> Unit
+) {
     HomeLayout(
         currentRouteName = HomeRoutes.Home.name,
         homeIndexRouter = homeIndexRouter
     ) {
         HomeTopBar()
         Text("Home")
+
+        OutlinedButton(onClick = goTransfer) {
+            Text("Go Transfer")
+        }
+
+        OutlinedButton(onClick = {}) {
+            Text("Go Payment")
+        }
     }
 }
 
@@ -23,5 +35,5 @@ fun HomeScreen(homeIndexRouter: HomeIndexRouter) {
 @Composable
 private fun PreviewScreen() {
     val navController = rememberNavController()
-    HomeScreen(HomeIndexRouter(navController))
+    HomeScreen(HomeIndexRouter(navController)) {}
 }

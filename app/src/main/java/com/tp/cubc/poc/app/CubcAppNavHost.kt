@@ -10,9 +10,12 @@ import com.tp.cubc.poc.landing.LoginScreen
 import com.tp.cubc.poc.landing.SplashScreen
 import com.tp.cubc.poc.landing.applyMobileBank.ApplyMobileBankEntryScreen
 import com.tp.cubc.poc.landing.register.registerGraph
+import com.tp.cubc.poc.transfer.TransferRoutes
+import com.tp.cubc.poc.transfer.transferGraph
 
 @Composable
 fun CubcAppNavHost(navHostController: NavHostController) {
+    // -- Landing --
     fun nextToLogin() {
         navHostController.popBackStack()
         navHostController.navigate(LandingRoutes.Login.name) {
@@ -25,14 +28,19 @@ fun CubcAppNavHost(navHostController: NavHostController) {
     fun goApplyMobileBank() {
         navHostController.navigate(LandingRoutes.ApplyMobileBank.name)
     }
+    val goBackLogin = {
+        navHostController.navigate(LandingRoutes.Login.name) {
+            popUpTo(LandingRoutes.Login.name) { inclusive = true }
+        }
+    }
+
+    // -- In Login Status--
     fun goHome() {
         navHostController.navigate(LandingRoutes.HomeIndex.name)
     }
 
-    val goBackLogin = {
-        navHostController.navigate(LandingRoutes.Login.name) {
-            popUpTo(LandingRoutes.Login.name) { inclusive = false }
-        }
+    val goTransfer = {
+        navHostController.navigate(TransferRoutes.Index.name)
     }
 
     NavHost(
@@ -60,6 +68,7 @@ fun CubcAppNavHost(navHostController: NavHostController) {
         composable(LandingRoutes.ApplyMobileBank.name) {
             ApplyMobileBankEntryScreen()
         }
-        homeGraph(navHostController)
+        homeGraph(navHostController, goTransfer)
+        transferGraph(navHostController)
     }
 }

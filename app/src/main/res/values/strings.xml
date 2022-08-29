@@ -36,5 +36,8 @@
 
     <!-- transfer -->
     <string name="transfer">Transfer</string>
+    <string name="transfer_detail">Transfer Detail</string>
+    <string name="transfer_confirmation">Confirmation</string>
+    <string name="transfer_result">Transaction Result</string>
 
 </resources>

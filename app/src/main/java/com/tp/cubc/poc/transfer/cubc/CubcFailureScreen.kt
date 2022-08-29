@@ -1,6 +1,7 @@
-package com.tp.cubc.poc.transfer
+package com.tp.cubc.poc.transfer.cubc
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -9,33 +10,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.compose.rememberNavController
 import com.tp.cubc.poc.R
 import com.tp.cubc.poc.ui.bg.TreeBg
+import com.tp.cubc.poc.ui.component.TitleText
 
 @Composable
-fun TransferMainScreen(transferTypesRouter: TransferTypesRouter) {
+fun CubcFailureScreen(
+    goHome: () -> Unit
+) {
     TreeBg {
         Column(Modifier.fillMaxSize()) {
             Text(
-                stringResource(id = R.string.transfer),
+                stringResource(id = R.string.transfer_result),
                 color = colorResource(R.color.white)
             )
 
-            Button(onClick = transferTypesRouter.goCubc) {
-                Text("Cubc")
-            }
+            TitleText("Failed")
+            Spacer(Modifier.weight(1.0f))
 
-            Button(onClick = transferTypesRouter.goBakongWallet) {
-                Text("Bakong Wallet")
-            }
-
-            Button(onClick = transferTypesRouter.goOtherBakong) {
-                Text("Other Bank Bakong")
-            }
-
-            Button(onClick = transferTypesRouter.goOtherLocalFast) {
-                Text("Local Bank")
+            Button(onClick = goHome) {
+                Text("Go Home")
             }
         }
     }
@@ -45,6 +39,5 @@ fun TransferMainScreen(transferTypesRouter: TransferTypesRouter) {
 @Preview(name = "phone", device = "spec:shape=Normal,width=375,height=790,unit=dp,dpi=480")
 @Composable
 private fun PreviewScreen() {
-    val navController = rememberNavController()
-    TransferMainScreen(TransferTypesRouter(navController))
+    CubcFailureScreen() {}
 }

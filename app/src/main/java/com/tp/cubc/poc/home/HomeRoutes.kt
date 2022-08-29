@@ -32,14 +32,19 @@ class HomeIndexRouter (navController: NavController) {
     }
 }
 
-fun NavGraphBuilder.homeGraph(navController: NavController) {
-//    val navBackStackEntry by navController.currentBackStackEntryAsState()
-//    val currentRoute = navBackStackEntry?.destination?.route
-
+fun NavGraphBuilder.homeGraph(
+    navController: NavController,
+    goTransfer: () -> Unit
+) {
     val homeRouter = HomeIndexRouter(navController)
 
     navigation(HomeRoutes.Home.name, LandingRoutes.HomeIndex.name) {
-        composable(HomeRoutes.Home.name) { HomeScreen(homeRouter) }
+        composable(HomeRoutes.Home.name) {
+            HomeScreen(
+                homeRouter,
+                goTransfer
+            )
+        }
         myAccountGraph(navController, homeRouter)
         composable(HomeRoutes.Location.name) { LocationScreen(homeRouter) }
         composable(HomeRoutes.Other.name) { OtherScreen(homeRouter) }
