@@ -9,7 +9,10 @@ import com.tp.cubc.poc.home.layout.HomeTopBar
 
 @Composable
 fun HomeScreen(homeIndexRouter: HomeIndexRouter) {
-    HomeLayout(homeIndexRouter) {
+    HomeLayout(
+        currentRouteName = HomeRoutes.Home.name,
+        homeIndexRouter = homeIndexRouter
+    ) {
         HomeTopBar()
         Text("Home")
     }

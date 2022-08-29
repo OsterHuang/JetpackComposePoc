@@ -11,7 +11,10 @@ import com.tp.cubc.poc.home.layout.HomeLayout
 
 @Composable
 fun LocationScreen(homeIndexRouter: HomeIndexRouter) {
-    HomeLayout(homeIndexRouter) {
+    HomeLayout(
+        currentRouteName = HomeRoutes.Location.name,
+        homeIndexRouter = homeIndexRouter
+    ) {
         Text(
             stringResource(id = R.string.location),
             color = colorResource(R.color.white)

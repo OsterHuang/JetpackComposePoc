@@ -12,6 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.tp.cubc.poc.R
 import com.tp.cubc.poc.home.HomeIndexRouter
+import com.tp.cubc.poc.home.HomeRoutes
 import com.tp.cubc.poc.home.layout.HomeLayout
 import com.tp.cubc.poc.ui.bg.TreeBg
 
@@ -20,7 +21,10 @@ fun MyAccountListScreen(
     homeIndexRouter: HomeIndexRouter,
     goDetail: () -> Unit
 ) {
-    HomeLayout(homeIndexRouter) {
+    HomeLayout(
+        currentRouteName = HomeRoutes.Account.name,
+        homeIndexRouter = homeIndexRouter
+    ) {
         Text(
             stringResource(id = R.string.my_account),
             color = colorResource(R.color.white)

@@ -13,6 +13,7 @@ import com.tp.cubc.poc.ui.bg.TreeBg
 @Composable
 fun HomeLayout(
     homeIndexRouter: HomeIndexRouter,
+    currentRouteName: String,
     content: @Composable () -> Unit
 ) {
     TreeBg() {
@@ -20,7 +21,7 @@ fun HomeLayout(
             Column(modifier = Modifier.weight(1.0f)) {
                 content()
             }
-            HomeBottomNavigation(homeIndexRouter)
+            HomeBottomNavigation(currentRouteName, homeIndexRouter)
         }
     }
 }
@@ -30,7 +31,7 @@ fun HomeLayout(
 @Composable
 private fun PreviewScreen() {
     val navController = rememberNavController()
-    HomeLayout(HomeIndexRouter(navController)) {
+    HomeLayout(HomeIndexRouter(navController), "Home") {
         Text("Test the content")
     }
 }

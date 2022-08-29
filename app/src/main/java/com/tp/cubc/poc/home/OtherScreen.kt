@@ -10,8 +10,11 @@ import com.tp.cubc.poc.R
 import com.tp.cubc.poc.home.layout.HomeLayout
 
 @Composable
-fun OtherScreen(homeRouter: HomeIndexRouter) {
-    HomeLayout(homeRouter) {
+fun OtherScreen(homeIndexRouter: HomeIndexRouter) {
+    HomeLayout(
+        currentRouteName = HomeRoutes.Other.name,
+        homeIndexRouter = homeIndexRouter
+    ) {
         Text(
             stringResource(id = R.string.service),
             color = colorResource(R.color.white)
