@@ -26,6 +26,7 @@
 
     <!-- Account -->
     <string name="my_account">My Account</string>
+    <string name="my_account_Detail">Account Detail</string>
 
     <!-- location -->
     <string name="location">Location</string>

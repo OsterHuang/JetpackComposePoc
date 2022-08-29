@@ -14,22 +14,33 @@ enum class HomeRoutes() {
     Other
 }
 
-class HomeRouter (navController: NavController) {
-    val goHome = { navController.navigate(HomeRoutes.Home.name) }
-    val goAccount = { navController.navigate(HomeRoutes.Account.name) }
-    val goLocation = { navController.navigate(HomeRoutes.Location.name) }
-    val goOther = { navController.navigate(HomeRoutes.Other.name) }
+class HomeIndexRouter (navController: NavController) {
+    val goHome = {
+        navController.popBackStack()
+        navController.navigate(HomeRoutes.Home.name)
+    }
+    val goAccount = {
+        navController.popBackStack()
+        navController.navigate(HomeRoutes.Account.name) }
+    val goLocation = {
+        navController.popBackStack()
+        navController.navigate(HomeRoutes.Location.name)
+    }
+    val goOther = {
+        navController.popBackStack()
+        navController.navigate(HomeRoutes.Other.name)
+    }
 }
 
 fun NavGraphBuilder.homeGraph(navController: NavController) {
 //    val navBackStackEntry by navController.currentBackStackEntryAsState()
 //    val currentRoute = navBackStackEntry?.destination?.route
 
-    val homeRouter = HomeRouter(navController)
+    val homeRouter = HomeIndexRouter(navController)
 
     navigation(HomeRoutes.Home.name, LandingRoutes.HomeIndex.name) {
         composable(HomeRoutes.Home.name) { HomeScreen(homeRouter) }
-        myAccountGraph(navController)
+        myAccountGraph(navController, homeRouter)
         composable(HomeRoutes.Location.name) { LocationScreen(homeRouter) }
         composable(HomeRoutes.Other.name) { OtherScreen(homeRouter) }
     }

@@ -1,5 +1,6 @@
 package com.tp.cubc.poc.home.layout
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -10,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -17,7 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.tp.cubc.poc.R
-import com.tp.cubc.poc.home.HomeRouter
+import com.tp.cubc.poc.home.HomeIndexRouter
 
 enum class HomeBottomNavItemRes(
     val iconResChecked: Int,
@@ -49,7 +51,7 @@ enum class HomeBottomNavItemRes(
 
 @Composable
 fun HomeBottomNavigation(
-    homeRouter: HomeRouter
+    homeIndexRouter: HomeIndexRouter
 ) {
     Row(
         modifier = Modifier
@@ -62,20 +64,20 @@ fun HomeBottomNavigation(
         horizontalArrangement = Arrangement.SpaceEvenly,
     ) {
         HomeBottomNavItem(
-            HomeBottomNavItemRes.Home,
-            homeRouter.goHome
+            res = HomeBottomNavItemRes.Home,
+            onClick = homeIndexRouter.goHome
         )
         HomeBottomNavItem(
-            HomeBottomNavItemRes.Account,
-            homeRouter.goAccount
+            res = HomeBottomNavItemRes.Account,
+            onClick = homeIndexRouter.goAccount
         )
         HomeBottomNavItem(
-            HomeBottomNavItemRes.Location,
-            homeRouter.goLocation
+            res = HomeBottomNavItemRes.Location,
+            onClick = homeIndexRouter.goLocation
         )
         HomeBottomNavItem(
-            HomeBottomNavItemRes.Other,
-            homeRouter.goOther
+            res = HomeBottomNavItemRes.Other,
+            onClick = homeIndexRouter.goOther
         )
     }
 }
@@ -85,11 +87,20 @@ fun HomeBottomNavItem(
     res: HomeBottomNavItemRes,
     onClick: () -> Unit
 ) {
+    val localContext = LocalContext.current
+
     Column(
         modifier = Modifier
             .wrapContentHeight()
             .wrapContentWidth(align = Alignment.CenterHorizontally)
-            .clickable { onClick }
+            .clickable {
+                Toast.makeText(
+                    localContext,
+                    "Oster",
+                    Toast.LENGTH_SHORT
+                )    .show()
+                onClick()
+            }
     ) {
         Image(
             modifier = Modifier
@@ -108,5 +119,5 @@ fun HomeBottomNavItem(
 @Preview(name = "phone", device = "spec:shape=Normal,width=375,height=790,unit=dp,dpi=480")
 @Composable
 private fun PreviewScreen() {
-    HomeBottomNavigation(homeRouter = HomeRouter(rememberNavController()))
+    HomeBottomNavigation(homeIndexRouter = HomeIndexRouter(rememberNavController()))
 }

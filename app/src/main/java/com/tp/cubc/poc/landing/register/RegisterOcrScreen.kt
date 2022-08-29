@@ -1,5 +1,6 @@
 package com.tp.cubc.poc.landing.register
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,7 +17,14 @@ import com.tp.cubc.poc.R
 import com.tp.cubc.poc.ui.bg.TreeBg
 
 @Composable
-fun RegisterOcrScreen(nextStep: () -> Unit) {
+fun RegisterOcrScreen(
+    nextStep: () -> Unit,
+    goBackToLogin: () -> Unit
+) {
+    BackHandler {
+        goBackToLogin()
+    }
+
     TreeBg {
         Column(Modifier.fillMaxSize()) {
             Text(
@@ -38,5 +46,5 @@ fun RegisterOcrScreen(nextStep: () -> Unit) {
 @Preview(name = "phone", device = "spec:shape=Normal,width=375,height=790,unit=dp,dpi=480")
 @Composable
 private fun PreviewScreen() {
-    RegisterOcrScreen() {}
+    RegisterOcrScreen({}, {})
 }

@@ -12,12 +12,12 @@ enum class RegisterRoutes() {
     Personal
 }
 
-fun NavGraphBuilder.registerGraph(navController: NavController) {
+fun NavGraphBuilder.registerGraph(navController: NavController, goBackLogin: () -> Unit) {
     val goOcr = { navController.navigate(RegisterRoutes.Ocr.name) }
     val goPersonal = { navController.navigate(RegisterRoutes.Personal.name) }
     navigation(RegisterRoutes.Term.name, LandingRoutes.Register.name) {
-        composable(RegisterRoutes.Term.name) { RegisterTermScreen(goOcr) }
-        composable(RegisterRoutes.Ocr.name) { RegisterOcrScreen(goPersonal) }
-        composable(RegisterRoutes.Personal.name) { RegisterPersonalScreen() }
+        composable(RegisterRoutes.Term.name) { RegisterTermScreen(goOcr, goBackLogin) }
+        composable(RegisterRoutes.Ocr.name) { RegisterOcrScreen(goPersonal, goBackLogin) }
+        composable(RegisterRoutes.Personal.name) { RegisterPersonalScreen(goBackLogin) }
     }
 }

@@ -29,7 +29,7 @@ fun CubcAppNavHost(navHostController: NavHostController) {
         navHostController.navigate(LandingRoutes.HomeIndex.name)
     }
 
-    fun goLogin() {
+    val goBackLogin = {
         navHostController.navigate(LandingRoutes.Login.name) {
             popUpTo(LandingRoutes.Login.name) { inclusive = false }
         }
@@ -56,7 +56,7 @@ fun CubcAppNavHost(navHostController: NavHostController) {
                 }
             )
         }
-        registerGraph(navHostController)
+        registerGraph(navHostController, goBackLogin)
         composable(LandingRoutes.ApplyMobileBank.name) {
             ApplyMobileBankEntryScreen()
         }

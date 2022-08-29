@@ -1,5 +1,6 @@
 package com.tp.cubc.poc.landing.register
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
@@ -12,7 +13,13 @@ import com.tp.cubc.poc.R
 import com.tp.cubc.poc.ui.bg.TreeBg
 
 @Composable
-fun RegisterPersonalScreen() {
+fun RegisterPersonalScreen(
+    goBackToLogin: () -> Unit
+) {
+    BackHandler {
+        goBackToLogin()
+    }
+
     TreeBg {
         Column(Modifier.fillMaxSize()) {
             Text(
@@ -27,5 +34,5 @@ fun RegisterPersonalScreen() {
 @Preview(name = "phone", device = "spec:shape=Normal,width=375,height=790,unit=dp,dpi=480")
 @Composable
 private fun PreviewScreen() {
-    RegisterPersonalScreen()
+    RegisterPersonalScreen() {}
 }
