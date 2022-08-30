@@ -5,44 +5,31 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.tp.cubc.poc.home.HomeRoutes
-import com.tp.cubc.poc.home.account.myAccountGraph
-import com.tp.cubc.poc.landing.LandingRoutes
+import com.tp.cubc.poc.transfer.bakongwallet.BakongWalletInputScreen
 import com.tp.cubc.poc.transfer.cubc.cubcTransferGraph
 import com.tp.cubc.poc.transfer.otherbakong.OtherBakongInputScreen
 import com.tp.cubc.poc.transfer.otherlocalfast.LocalFastInputScreen
+import com.tp.cubc.poc.transfer.typedialog.TransferTypeRouter
+import com.tp.cubc.poc.transfer.typedialog.TransferTypeRoutes
+import com.tp.cubc.poc.transfer.typedialog.transferTypeGraph
 
 enum class TransferRoutes() {
-    Index,
-    Main,
+    TransferIndex,
+    TransferMain,
     Cubc,
     BakongWallet,
     OtherLocalFast,
     OtherBakong
 }
 
-class TransferTypesRouter (navController: NavController) {
-    val goCubc = {
-        navController.navigate(TransferRoutes.Cubc.name)
-    }
-    val goBakongWallet = {
-        navController.navigate(TransferRoutes.BakongWallet.name)
-    }
-    val goOtherLocalFast = {
-        navController.navigate(TransferRoutes.OtherLocalFast.name)
-    }
-    val goOtherBakong = {
-        navController.navigate(TransferRoutes.OtherBakong.name)
-    }
-}
-
 fun NavGraphBuilder.transferGraph(navController: NavController) {
 
-    val transferTypesRouter = TransferTypesRouter(navController)
+    val transferTypesRouter = TransferTypeRouter(navController)
 
     val goNewTransfer = {
         navController.popBackStack()
-        navController.navigate(TransferRoutes.Index.name) {
-            popUpTo(TransferRoutes.Index.name) { inclusive = true }
+        navController.navigate(TransferRoutes.TransferIndex.name) {
+            popUpTo(TransferRoutes.TransferIndex.name) { inclusive = true }
         }
     }
     val goAccount = {
@@ -58,8 +45,12 @@ fun NavGraphBuilder.transferGraph(navController: NavController) {
         }
     }
 
-    navigation(TransferRoutes.Main.name, TransferRoutes.Index.name) {
-        composable(TransferRoutes.Main.name) { TransferMainScreen(transferTypesRouter) }
+    navigation(TransferRoutes.TransferMain.name, TransferRoutes.TransferIndex.name) {
+        composable(TransferRoutes.TransferMain.name) { TransferMainScreen(transferTypesRouter) }
+        transferTypeGraph(
+            routeName = TransferTypeRoutes.TransferTypeIndex.name,
+            navController = navController
+        )
         cubcTransferGraph(
             routeName = TransferRoutes.Cubc.name,
             navController = navController,
@@ -67,6 +58,7 @@ fun NavGraphBuilder.transferGraph(navController: NavController) {
             goAccount = goAccount,
             goHome = goHome
         )
+        composable(TransferRoutes.BakongWallet.name) { BakongWalletInputScreen() }
         composable(TransferRoutes.OtherBakong.name) { OtherBakongInputScreen() }
         composable(TransferRoutes.OtherLocalFast.name) { LocalFastInputScreen() }
     }

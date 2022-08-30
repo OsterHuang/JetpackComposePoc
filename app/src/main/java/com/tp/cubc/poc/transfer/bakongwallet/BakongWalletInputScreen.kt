@@ -1,7 +1,9 @@
-package com.tp.cubc.poc.transfer.otherlocalfast
+package com.tp.cubc.poc.transfer.bakongwallet
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -13,7 +15,7 @@ import com.tp.cubc.poc.ui.bg.TreeBg
 import com.tp.cubc.poc.ui.component.TitleText
 
 @Composable
-fun LocalFastInputScreen() {
+fun BakongWalletInputScreen() {
     TreeBg {
         Column(Modifier.fillMaxSize()) {
             Text(
@@ -21,7 +23,12 @@ fun LocalFastInputScreen() {
                 color = colorResource(R.color.white)
             )
 
-            TitleText("Local Transfer or Fast Transfer")
+            TitleText("Bakong Wallet Input")
+            Spacer(Modifier.weight(1.0f))
+
+            Button(onClick = {}) {
+                Text("Next")
+            }
         }
     }
 }
@@ -30,5 +37,5 @@ fun LocalFastInputScreen() {
 @Preview(name = "phone", device = "spec:shape=Normal,width=375,height=790,unit=dp,dpi=480")
 @Composable
 private fun PreviewScreen() {
-    LocalFastInputScreen()
+    BakongWalletInputScreen()
 }

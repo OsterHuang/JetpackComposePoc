@@ -40,7 +40,7 @@ fun CubcAppNavHost(navHostController: NavHostController) {
     }
 
     val goTransfer = {
-        navHostController.navigate(TransferRoutes.Index.name)
+        navHostController.navigate(TransferRoutes.TransferIndex.name)
     }
 
     NavHost(

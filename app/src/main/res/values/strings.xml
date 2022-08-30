@@ -40,4 +40,12 @@
     <string name="transfer_confirmation">Confirmation</string>
     <string name="transfer_result">Transaction Result</string>
 
+    <string name="cubc">CUBC</string>
+    <string name="other_bank_and_wallet">Other Bank &amp; Wallet</string>
+    <string name="bakong_wallet">Bakong Wallet</string>
+
+    <string name="bakong">Bakong</string>
+    <string name="fast_transfer">Fast Transfer</string>
+    <string name="local_bank_transfer">Local Bank Transfer</string>
+
 </resources>

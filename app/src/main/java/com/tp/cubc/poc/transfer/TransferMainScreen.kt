@@ -1,6 +1,7 @@
 package com.tp.cubc.poc.transfer
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -11,10 +12,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.tp.cubc.poc.R
+import com.tp.cubc.poc.transfer.typedialog.TransferTypeRouter
 import com.tp.cubc.poc.ui.bg.TreeBg
+import com.tp.cubc.poc.ui.component.TitleText
 
 @Composable
-fun TransferMainScreen(transferTypesRouter: TransferTypesRouter) {
+fun TransferMainScreen(transferTypeRouter: TransferTypeRouter) {
     TreeBg {
         Column(Modifier.fillMaxSize()) {
             Text(
@@ -22,29 +25,22 @@ fun TransferMainScreen(transferTypesRouter: TransferTypesRouter) {
                 color = colorResource(R.color.white)
             )
 
-            Button(onClick = transferTypesRouter.goCubc) {
-                Text("Cubc")
-            }
+            TitleText("下拉選單")
 
-            Button(onClick = transferTypesRouter.goBakongWallet) {
-                Text("Bakong Wallet")
-            }
+            Spacer(Modifier.weight(1.0f))
 
-            Button(onClick = transferTypesRouter.goOtherBakong) {
-                Text("Other Bank Bakong")
-            }
-
-            Button(onClick = transferTypesRouter.goOtherLocalFast) {
-                Text("Local Bank")
+            Button(onClick = transferTypeRouter.openTransferType) {
+                Text("Open Dialog")
             }
         }
     }
 }
 
 
-@Preview(name = "phone", device = "spec:shape=Normal,width=375,height=790,unit=dp,dpi=480")
+//@Preview(name = "phone", device = "spec:shape=Normal,width=375,height=790,unit=dp,dpi=480")
+@Preview
 @Composable
 private fun PreviewScreen() {
     val navController = rememberNavController()
-    TransferMainScreen(TransferTypesRouter(navController))
+    TransferMainScreen(TransferTypeRouter(navController))
 }

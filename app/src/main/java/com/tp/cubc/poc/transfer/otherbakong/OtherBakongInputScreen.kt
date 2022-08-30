@@ -10,6 +10,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.tp.cubc.poc.R
 import com.tp.cubc.poc.ui.bg.TreeBg
+import com.tp.cubc.poc.ui.component.TitleText
 
 @Composable
 fun OtherBakongInputScreen() {
@@ -19,6 +20,8 @@ fun OtherBakongInputScreen() {
                 stringResource(id = R.string.transfer),
                 color = colorResource(R.color.white)
             )
+
+            TitleText("Other Bank Bakong")
         }
     }
 }
