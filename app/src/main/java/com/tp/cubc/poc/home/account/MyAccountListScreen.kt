@@ -1,11 +1,8 @@
 package com.tp.cubc.poc.home.account
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Text
+import androidx.compose.material.Button
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -14,7 +11,6 @@ import com.tp.cubc.poc.R
 import com.tp.cubc.poc.home.HomeIndexRouter
 import com.tp.cubc.poc.home.HomeRoutes
 import com.tp.cubc.poc.home.layout.HomeLayout
-import com.tp.cubc.poc.ui.bg.TreeBg
 
 @Composable
 fun MyAccountListScreen(
@@ -30,7 +26,7 @@ fun MyAccountListScreen(
             color = colorResource(R.color.white)
         )
 
-        OutlinedButton(onClick = goDetail) {
+        Button(onClick = goDetail) {
             Text("My account 1")
         }
     }

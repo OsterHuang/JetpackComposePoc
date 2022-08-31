@@ -1,12 +1,13 @@
 package com.tp.cubc.poc.home
 
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Text
+import androidx.compose.material.Button
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.tp.cubc.poc.home.layout.HomeLayout
 import com.tp.cubc.poc.home.layout.HomeTopBar
+import com.tp.cubc.poc.ui.component.TitleText
 
 @Composable
 fun HomeScreen(
@@ -18,13 +19,13 @@ fun HomeScreen(
         homeIndexRouter = homeIndexRouter
     ) {
         HomeTopBar()
-        Text("Home")
+        TitleText("Home")
 
-        OutlinedButton(onClick = goTransfer) {
+        Button(onClick = goTransfer) {
             Text("Go Transfer")
         }
 
-        OutlinedButton(onClick = {}) {
+        Button(onClick = {}) {
             Text("Go Payment")
         }
     }
