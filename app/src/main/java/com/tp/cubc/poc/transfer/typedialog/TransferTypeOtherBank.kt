@@ -2,10 +2,7 @@ package com.tp.cubc.poc.transfer.typedialog
 
 import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -43,13 +40,14 @@ fun TransferTypeOtherBank(
         modifier = Modifier
             .fillMaxWidth(0.9f)
             .fillMaxHeight(0.9f)
-            .padding(8.dp, 15.dp)
             .background(
                 color = colorResource(id = R.color.white),
                 shape = RoundedCornerShape(30.dp)
             ),
     ) {
-        LazyColumn {
+        LazyColumn(
+            Modifier.padding(8.dp, 16.dp)
+        ) {
             items(mutableState.value.size) {
                 mutableState.value.forEach { otherBank ->
                     TextButton(
@@ -57,7 +55,7 @@ fun TransferTypeOtherBank(
                             chooseBank(otherBank)
                             goOtherBankType()
                         },
-                        Modifier.padding(8.dp, 15.dp)
+                        Modifier.padding(4.dp, 4.dp)
                     ) {
                         Text(otherBank.name)
                     }

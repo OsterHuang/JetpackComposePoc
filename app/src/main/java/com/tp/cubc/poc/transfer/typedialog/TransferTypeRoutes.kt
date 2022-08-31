@@ -1,5 +1,7 @@
 package com.tp.cubc.poc.transfer.typedialog
 
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.dialog
@@ -44,6 +46,7 @@ class TransferTypeRouter (navController: NavController) {
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 fun NavGraphBuilder.transferTypeGraph(routeName: String, navController: NavController) {
     val transferTypeDialogRouter = TransferTypeDialogRouter(navController)
     val transferTypeRouter = TransferTypeRouter(navController)
@@ -61,13 +64,19 @@ fun NavGraphBuilder.transferTypeGraph(routeName: String, navController: NavContr
                 goBakongWallet = transferTypeRouter.goBakongWallet
             )
         }
-        dialog(TransferTypeRoutes.TransferTypeOtherBank.name) {
+        dialog(
+            route = TransferTypeRoutes.TransferTypeOtherBank.name,
+            dialogProperties = DialogProperties(usePlatformDefaultWidth = false)
+        ) {
             TransferTypeOtherBank(
                 chooseBank = { it -> otherBank = it } ,
                 goOtherBankType = transferTypeDialogRouter.goOtherBankType
             )
         }
-        dialog(TransferTypeRoutes.TransferTypeOtherBankType.name) {
+        dialog(
+            route = TransferTypeRoutes.TransferTypeOtherBankType.name,
+            dialogProperties = DialogProperties(usePlatformDefaultWidth = true)
+        ) {
             TransferTypeOtherBankType(
                 otherBank = otherBank,
                 goOtherLocalFast = transferTypeRouter.goOtherLocalFast,

@@ -2,7 +2,9 @@ package com.tp.cubc.poc.transfer.typedialog
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -25,6 +27,7 @@ fun TransferTypeOtherBankType(
     Column(
         modifier = Modifier
             .padding(8.dp, 15.dp)
+            .width(340.dp).height(200.dp)
             .background(
                 color = colorResource(id = R.color.white),
                 shape = RoundedCornerShape(30.dp)
