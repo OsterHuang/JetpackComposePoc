@@ -38,11 +38,16 @@ fun NavGraphBuilder.homeGraph(
 ) {
     val homeRouter = HomeIndexRouter(navController)
 
+    val goUiExample = {
+        navController.navigate("ComponentSampleScreen")
+    }
+
     navigation(HomeRoutes.Home.name, LandingRoutes.HomeIndex.name) {
         composable(HomeRoutes.Home.name) {
             HomeScreen(
                 homeRouter,
-                goTransfer
+                goTransfer,
+                goUiExample
             )
         }
         myAccountGraph(navController, homeRouter)

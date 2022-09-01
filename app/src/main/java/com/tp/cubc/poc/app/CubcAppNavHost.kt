@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.tp.cubc.poc.example.ComponentSampleScreen
 import com.tp.cubc.poc.home.homeGraph
 import com.tp.cubc.poc.landing.LandingRoutes
 import com.tp.cubc.poc.landing.LoginScreen
@@ -70,5 +71,9 @@ fun CubcAppNavHost(navHostController: NavHostController) {
         }
         homeGraph(navHostController, goTransfer)
         transferGraph(navHostController)
+        // -- UI Examples never mind the hard code --
+        composable("ComponentSampleScreen") {
+            ComponentSampleScreen()
+        }
     }
 }
