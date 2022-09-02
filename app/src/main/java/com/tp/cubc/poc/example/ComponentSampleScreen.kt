@@ -1,22 +1,23 @@
 package com.tp.cubc.poc.example
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.tp.cubc.poc.ui.bg.TreeBg
-import com.tp.cubc.poc.ui.component.DropdownField
-import com.tp.cubc.poc.ui.component.ErrorMessage
-import com.tp.cubc.poc.ui.component.TitleText
+import com.tp.cubc.poc.ui.component.*
+import java.util.*
 
 @Composable
 fun ComponentSampleScreen() {
+    val pickedYearState = remember{ mutableStateOf(2000) }
+    val pickedMonthState = remember{ mutableStateOf(5) }
+    val pickedDateState = remember{ mutableStateOf(20) }
+
+    var pickedDate by remember{ mutableStateOf(Date()) }
 
     TreeBg {
         Column(Modifier.fillMaxSize()) {
@@ -51,7 +52,30 @@ fun ComponentSampleScreen() {
                 enabled = false
             )
 
+            Row(Modifier.fillMaxWidth()) {
+                NumberPicker(
+                    state = pickedYearState,
+                    range = IntRange(1990, 2023),
+                    modifier = Modifier.weight(1.0f)
+                )
+
+                NumberPicker(
+                    state = pickedMonthState,
+                    range = IntRange(1, 12),
+                    modifier = Modifier.weight(1.0f)
+                )
+
+                NumberPicker(
+                    state = pickedDateState,
+                    range = IntRange(1, 31),
+                    modifier = Modifier.weight(1.0f)
+                )
+            }
+
+            DatePicker { date -> pickedDate = date }
+
             Spacer(Modifier.weight(1.0f))
+
         }
     }
 }
