@@ -2,6 +2,7 @@ package com.tp.cubc.poc.ui.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -13,12 +14,11 @@ import com.tp.cubc.poc.R
 @Composable
 fun ErrorMessage(
     text: String,
-    modifier: Modifier = Modifier.fillMaxWidth(),
+    modifier: Modifier = Modifier,
 ) {
     Text(
-        modifier = modifier.padding(8.dp, 4.dp),
-        fontSize = 16.sp,
-        color = colorResource(id = R.color.red) ,
+        modifier = modifier.padding(0.dp, 8.dp),
+        color = MaterialTheme.colors.error,
         text = text
     )
 }

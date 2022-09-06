@@ -3,6 +3,8 @@ package com.tp.cubc.poc.ui.component
 import android.view.LayoutInflater
 import android.widget.DatePicker
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
@@ -13,11 +15,14 @@ import java.util.*
 fun DatePicker(
     onDateSelected: (Date) -> Unit = {}
 ) {
+//    val dividerColor = MaterialTheme.colors.onSurface.copy(alpha = TextFieldDefaults.IconOpacity)
+
     AndroidView(
         modifier = Modifier.fillMaxWidth(),
         factory = { context ->
             val view = LayoutInflater.from(context).inflate(R.layout.comp_date_wheel_picker, null)
             val datePicker = view.findViewById<DatePicker>(R.id.datePicker)
+
             val calendar = Calendar.getInstance() // show today by default
             datePicker.init(
                 calendar.get(Calendar.YEAR),
@@ -29,6 +34,10 @@ fun DatePicker(
                 }.time
                 onDateSelected(date)
             }
+
+//            datePicker.setSelectionDivider(dividerColor);
+//            datePicker.setSelectionDividerHeight(2);
+
             datePicker
         }
     )

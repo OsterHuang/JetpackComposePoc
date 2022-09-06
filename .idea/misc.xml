@@ -137,10 +137,27 @@
         <entry key="../../../../../layout/compose-model-1662103387883.xml" value="0.37012987012987014" />
         <entry key="../../../../../layout/compose-model-1662103466175.xml" value="0.1688907422852377" />
         <entry key="../../../../../layout/compose-model-1662105393336.xml" value="0.25333333333333335" />
+        <entry key="../../../../../layout/compose-model-1662342516830.xml" value="0.37012987012987014" />
+        <entry key="../../../../../layout/compose-model-1662343169471.xml" value="0.25333333333333335" />
+        <entry key="../../../../../layout/compose-model-1662351618010.xml" value="0.2638888888888889" />
+        <entry key="../../../../../layout/compose-model-1662439201949.xml" value="0.375" />
+        <entry key="../../../../../layout/compose-model-1662439313904.xml" value="0.1" />
+        <entry key="../../../../../layout/compose-model-1662450763009.xml" value="0.25333333333333335" />
+        <entry key="../../../../../layout/compose-model-1662451110823.xml" value="0.2638888888888889" />
+        <entry key="../../../../../layout/compose-model-1662451961558.xml" value="0.25333333333333335" />
+        <entry key="../../../../../layout/compose-model-1662452026475.xml" value="0.25333333333333335" />
+        <entry key="../../../../../layout/compose-model-1662452413078.xml" value="0.25333333333333335" />
+        <entry key="../../../../../layout/compose-model-1662453344208.xml" value="0.25" />
+        <entry key="../../../../../layout/compose-model-1662455664295.xml" value="0.165" />
+        <entry key="../../../../../layout/compose-model-1662457195231.xml" value="0.165" />
+        <entry key="../../../../../layout/custom_preview.xml" value="0.12428523377060209" />
+        <entry key="app/src/main/res/drawable-v24/bg_screen_splash.xml" value="0.1425" />
         <entry key="app/src/main/res/drawable-v24/bg_splash.xml" value="0.1" />
         <entry key="app/src/main/res/drawable-v24/ic_splash_logo.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/bg_home.xml" value="0.1425" />
         <entry key="app/src/main/res/drawable/bg_login.xml" value="0.1505" />
         <entry key="app/src/main/res/drawable/ic_home_tab_home_checked.xml" value="0.142" />
+        <entry key="app/src/main/res/drawable/ic_home_tree.xml" value="0.1425" />
         <entry key="app/src/main/res/layout/comp_date_wheel_picker.xml" value="0.24682971014492755" />
       </map>
     </option>

@@ -22,6 +22,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import com.tp.cubc.poc.ui.theme.Typography
 import kotlinx.coroutines.launch
 import java.lang.Math.abs
 import kotlin.math.roundToInt
@@ -88,7 +89,8 @@ fun NumberPicker(
     ) {
         val spacing = 4.dp
 
-        val arrowColor = MaterialTheme.colors.onSecondary.copy(alpha = ContentAlpha.disabled)
+//        val arrowColor = MaterialTheme.colors.onSecondary.copy(alpha = ContentAlpha.disabled)
+        val arrowColor = MaterialTheme.colors.onSurface.copy(alpha = TextFieldDefaults.IconOpacity)
 
         Icon(
             imageVector = Icons.Default.ArrowDropDown,
@@ -105,7 +107,7 @@ fun NumberPicker(
                 .offset { IntOffset(x = 0, y = coercedAnimatedOffset.roundToInt()) }
         ) {
             val baseLabelModifier = Modifier.align(Alignment.Center)
-            ProvideTextStyle(textStyle) {
+            ProvideTextStyle(Typography.body1) {
                 Label(
                     text = (animatedStateValue - 1).toString(),
                     modifier = baseLabelModifier

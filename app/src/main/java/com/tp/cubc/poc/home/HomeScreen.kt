@@ -1,8 +1,11 @@
 package com.tp.cubc.poc.home
 
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -12,6 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import com.tp.cubc.poc.home.layout.HomeLayout
 import com.tp.cubc.poc.home.layout.HomeTopBar
 import com.tp.cubc.poc.ui.component.TitleText
+import com.tp.cubc.poc.ui.theme.CubcAppTheme
 
 @Composable
 fun HomeScreen(
@@ -20,6 +24,7 @@ fun HomeScreen(
     goUiExample: () -> Unit
 ) {
     HomeLayout(
+        noWhiteTree = false,
         currentRouteName = HomeRoutes.Home.name,
         homeIndexRouter = homeIndexRouter
     ) {
@@ -43,5 +48,12 @@ fun HomeScreen(
 @Composable
 private fun PreviewScreen() {
     val navController = rememberNavController()
-    HomeScreen(HomeIndexRouter(navController), {}) {}
+    CubcAppTheme {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colors.background
+        ) {
+            HomeScreen(HomeIndexRouter(navController), {}) {}
+        }
+    }
 }

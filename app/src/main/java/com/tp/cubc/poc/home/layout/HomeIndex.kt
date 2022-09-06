@@ -8,15 +8,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.tp.cubc.poc.home.HomeIndexRouter
+import com.tp.cubc.poc.ui.bg.HomeBg
 import com.tp.cubc.poc.ui.bg.TreeBg
 
 @Composable
 fun HomeLayout(
+    noWhiteTree: Boolean = true,
     homeIndexRouter: HomeIndexRouter,
     currentRouteName: String,
     content: @Composable () -> Unit
 ) {
-    TreeBg() {
+    HomeBg(noWhiteTree = noWhiteTree) {
         Column(modifier = Modifier.fillMaxSize(1.0f)) {
             Column(modifier = Modifier.weight(1.0f)) {
                 content()
@@ -31,7 +33,7 @@ fun HomeLayout(
 @Composable
 private fun PreviewScreen() {
     val navController = rememberNavController()
-    HomeLayout(HomeIndexRouter(navController), "Home") {
+    HomeLayout(false, HomeIndexRouter(navController), "Home") {
         Text("Test the content")
     }
 }

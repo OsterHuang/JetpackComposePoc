@@ -16,9 +16,10 @@ fun TitleText(
     modifier: Modifier = Modifier.fillMaxWidth(),
 ) {
     Text(
+        style = com.tp.cubc.poc.ui.theme.Typography.h3,
         modifier = modifier.padding(16.dp),
-        fontSize = 24.sp,
-        color = colorResource(id = R.color.white) ,
+//        fontSize = 24.sp,
+//        color = colorResource(id = R.color.white) ,
         text = text
     )
 }
