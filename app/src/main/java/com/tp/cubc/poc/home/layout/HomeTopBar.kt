@@ -1,6 +1,7 @@
 package com.tp.cubc.poc.home.layout
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -23,7 +24,10 @@ fun HomeTopBar() {
     TopAppBar(
         title = {
             Text(
-                modifier = Modifier.fillMaxWidth().wrapContentSize(Alignment.Center),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentSize(Alignment.Center)
+                    .offset((-16).dp, 0.dp),
                 text = "Top App Bar",
                 style = com.tp.cubc.poc.ui.theme.Typography.h3,
                 color = foregroundColor
