@@ -12,7 +12,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.tp.cubc.poc.R
 import com.tp.cubc.poc.transfer.TransferMainViewModel
 import com.tp.cubc.poc.transfer.model.TransferType
@@ -20,6 +20,7 @@ import com.tp.cubc.poc.ui.component.Divider
 
 @Composable
 fun TransferTypeLevel1(
+    transferMainViewModel: TransferMainViewModel,
     goCubc: () -> Unit,
     goOtherBank: () -> Unit,
     goBakongWallet: () -> Unit,
@@ -34,6 +35,7 @@ fun TransferTypeLevel1(
     ) {
         TextButton(
             onClick = {
+                transferMainViewModel.transferType.value = TransferType.Cubc
                 goCubc()
             },
             Modifier.padding(4.dp, 8.dp)
@@ -60,5 +62,5 @@ fun TransferTypeLevel1(
 @Preview(name = "phone", device = "spec:shape=Normal,width=375,height=790,unit=dp,dpi=480")
 @Composable
 private fun PreviewScreen() {
-    TransferTypeLevel1 ({}, {}, {})
+    TransferTypeLevel1 (TransferMainViewModel(hiltViewModel()), {}, {}, {})
 }

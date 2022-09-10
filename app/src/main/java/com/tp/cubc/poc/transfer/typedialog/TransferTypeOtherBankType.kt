@@ -14,6 +14,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tp.cubc.poc.R
 import com.tp.cubc.poc.transfer.TransferMainViewModel
@@ -30,7 +31,8 @@ fun TransferTypeOtherBankType(
     Column(
         modifier = Modifier
             .padding(8.dp, 15.dp)
-            .width(340.dp).height(200.dp)
+            .width(340.dp)
+            .height(200.dp)
             .background(
                 color = colorResource(id = R.color.white),
                 shape = RoundedCornerShape(30.dp)
@@ -71,7 +73,7 @@ fun TransferTypeOtherBankType(
 @Composable
 private fun PreviewScreen() {
     TransferTypeOtherBankType (
-        transferMainViewModel = viewModel(),
+        transferMainViewModel = hiltViewModel(),
         OtherBank(
             name ="Oster Test",
             isBakong = true,

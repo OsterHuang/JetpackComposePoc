@@ -1,5 +1,7 @@
 package com.tp.cubc.poc.transfer.cubc
 
+import androidx.compose.runtime.remember
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -8,6 +10,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.tp.cubc.poc.transfer.TransferMainViewModel
+import com.tp.cubc.poc.transfer.TransferRoutes
 
 enum class CubcTransferRoutes() {
     Input,
@@ -39,8 +42,13 @@ fun NavGraphBuilder.cubcTransferGraph(
     val transferTypesRouter = TransferTypesRouter(navController)
 
     navigation(CubcTransferRoutes.Input.name, routeName) {
-        composable(CubcTransferRoutes.Input.name) {
+        composable(CubcTransferRoutes.Input.name) { navBackStackEntry ->
+            val parentEntry = remember(navBackStackEntry) {
+                navController.getBackStackEntry(TransferRoutes.TransferMain.name)
+            }
+            val transferMainViewModel = hiltViewModel<TransferMainViewModel>(parentEntry)
             CubcInputScreen(
+                transferMainViewModel = transferMainViewModel,
                 goConfirm = transferTypesRouter.goConfirm
             )
         }

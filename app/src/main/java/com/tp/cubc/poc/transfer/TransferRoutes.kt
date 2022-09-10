@@ -3,9 +3,8 @@ package com.tp.cubc.poc.transfer
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.ViewModelStore
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -72,7 +71,8 @@ fun NavGraphBuilder.transferGraph(navController: NavController) {
 
     navigation(TransferRoutes.TransferMain.name, TransferRoutes.TransferIndex.name) {
         composable(TransferRoutes.TransferMain.name) {
-            TransferMainScreen(transferTypeRouter = transferTypesRouter)
+            val transferMainViewModel = hiltViewModel<TransferMainViewModel>()
+            TransferMainScreen(transferMainViewModel = transferMainViewModel, transferTypeRouter = transferTypesRouter)
         }
         transferTypeGraph(
             routeName = TransferTypeRoutes.TransferTypeIndex.name,

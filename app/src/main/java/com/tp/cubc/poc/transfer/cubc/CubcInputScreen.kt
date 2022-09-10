@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.tp.cubc.poc.R
 import com.tp.cubc.poc.transfer.TransferMainViewModel
 import com.tp.cubc.poc.ui.bg.TreeBg
@@ -16,7 +17,7 @@ import com.tp.cubc.poc.ui.component.TitleText
 import com.tp.cubc.poc.ui.theme.CubcAppTheme
 
 @Composable
-fun CubcInputScreen(transferMainViewModel: TransferMainViewModel = TransferMainViewModel(), goConfirm: () -> Unit) {
+fun CubcInputScreen(transferMainViewModel: TransferMainViewModel, goConfirm: () -> Unit) {
 
     TreeBg {
         Column(Modifier.fillMaxSize()) {
@@ -48,6 +49,6 @@ fun CubcInputScreen(transferMainViewModel: TransferMainViewModel = TransferMainV
 @Composable
 private fun PreviewScreen() {
     CubcAppTheme {
-        CubcInputScreen(TransferMainViewModel()) {}
+        CubcInputScreen(hiltViewModel<TransferMainViewModel>()) {}
     }
 }

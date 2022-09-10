@@ -14,7 +14,7 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.tp.cubc.poc.ui.bg.BasicBg
@@ -26,10 +26,11 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun TransferMainScreen(
-    transferTypeRouter: TransferTypeRouter
+    transferMainViewModel: TransferMainViewModel,
+    transferTypeRouter: TransferTypeRouter,
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val transferMainViewModel = viewModel<TransferMainViewModel>()
+//    val transferMainViewModel = hiltViewModel<TransferMainViewModel>()
 
     LaunchedEffect(true) { // Set true to execute on first recompositio
         coroutineScope.launch {
@@ -68,7 +69,9 @@ fun TransferMainScreen(
                 )
                 transferMainViewModel.fromAccount.value?.run {
                     Text(
-                        modifier = Modifier.fillMaxWidth().wrapContentWidth(Alignment.End),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentWidth(Alignment.End),
                         text = "Balance: ${transferMainViewModel.fromAccount.value?.balance}",
                         fontSize = 12.sp
                     )
@@ -87,14 +90,18 @@ fun TransferMainScreen(
                             modifier = Modifier.rotate(180f),
                         )
                     },
-                    modifier = Modifier.fillMaxWidth().clickable(enabled = true, onClick = transferTypeRouter.openTransferType)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable(enabled = true, onClick = transferTypeRouter.openTransferType)
                 )
             }
 
             Spacer(Modifier.weight(1f))
 
             Button(
-                modifier = Modifier.fillMaxWidth().padding(16.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
                 onClick = {}
             ) {
                 Text("Next")
@@ -111,7 +118,8 @@ private fun PreviewScreen() {
     val navController = rememberNavController()
     CubcAppTheme() {
         TransferMainScreen(
-            TransferTypeRouter(navController)
+            TransferMainViewModel(hiltViewModel()),
+            TransferTypeRouter(navController),
         )
     }
 }

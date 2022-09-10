@@ -1,11 +1,9 @@
 package com.tp.cubc.poc.transfer.typedialog
 
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.ProvidableCompositionLocal
+import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.DialogProperties
-import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -52,8 +50,14 @@ fun NavGraphBuilder.transferTypeGraph(
         startDestination = TransferRoutes.TransferMain.name,
         route = routeName
     ) {
-        dialog(TransferTypeRoutes.TransferTypeLevel1.name) {
+        dialog(TransferTypeRoutes.TransferTypeLevel1.name) { navBackStackEntry ->
+            val parentEntry = remember(navBackStackEntry) {
+                navController.getBackStackEntry(TransferRoutes.TransferMain.name)
+            }
+            val transferMainViewModel = hiltViewModel<TransferMainViewModel>(parentEntry)
+
             TransferTypeLevel1(
+                transferMainViewModel = transferMainViewModel,
                 goCubc = transferTypeRouter.goCubc,
                 goOtherBank = transferTypeDialogRouter.goOtherBank,
                 goBakongWallet = transferTypeRouter.goBakongWallet
@@ -71,8 +75,11 @@ fun NavGraphBuilder.transferTypeGraph(
         dialog(
             route = TransferTypeRoutes.TransferTypeOtherBankType.name,
             dialogProperties = DialogProperties(usePlatformDefaultWidth = true)
-        ) {
-            val transferMainViewModel = viewModel<TransferMainViewModel>()
+        ) { navBackStackEntry ->
+            val parentEntry = remember(navBackStackEntry) {
+                navController.getBackStackEntry(TransferRoutes.TransferMain.name)
+            }
+            val transferMainViewModel = hiltViewModel<TransferMainViewModel>(parentEntry)
             TransferTypeOtherBankType(
                 transferMainViewModel = transferMainViewModel,
                 otherBank = otherBank,
