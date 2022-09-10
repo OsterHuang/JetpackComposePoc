@@ -41,8 +41,7 @@ class TransferTypeDialogRouter (navController: NavController) {
 @OptIn(ExperimentalComposeUiApi::class)
 fun NavGraphBuilder.transferTypeGraph(
     routeName: String,
-    navController: NavController,
-    transferMainViewModelStoreOwner: ProvidableCompositionLocal<ViewModelStoreOwner>
+    navController: NavController
 ) {
     val transferTypeDialogRouter = TransferTypeDialogRouter(navController)
     val transferTypeRouter = TransferTypeRouter(navController)
@@ -54,17 +53,11 @@ fun NavGraphBuilder.transferTypeGraph(
         route = routeName
     ) {
         dialog(TransferTypeRoutes.TransferTypeLevel1.name) {
-            CompositionLocalProvider(
-                LocalViewModelStoreOwner provides transferMainViewModelStoreOwner.current
-            ) {
-                val transferMainViewModel = viewModel<TransferMainViewModel>()
-                TransferTypeLevel1(
-                    transferMainViewModel = transferMainViewModel,
-                    goCubc = transferTypeRouter.goCubc,
-                    goOtherBank = transferTypeDialogRouter.goOtherBank,
-                    goBakongWallet = transferTypeRouter.goBakongWallet
-                )
-            }
+            TransferTypeLevel1(
+                goCubc = transferTypeRouter.goCubc,
+                goOtherBank = transferTypeDialogRouter.goOtherBank,
+                goBakongWallet = transferTypeRouter.goBakongWallet
+            )
         }
         dialog(
             route = TransferTypeRoutes.TransferTypeOtherBank.name,
@@ -79,17 +72,13 @@ fun NavGraphBuilder.transferTypeGraph(
             route = TransferTypeRoutes.TransferTypeOtherBankType.name,
             dialogProperties = DialogProperties(usePlatformDefaultWidth = true)
         ) {
-            CompositionLocalProvider(
-                LocalViewModelStoreOwner provides transferMainViewModelStoreOwner.current
-            ) {
-                val transferMainViewModel = viewModel<TransferMainViewModel>()
-                TransferTypeOtherBankType(
-                    transferMainViewModel = transferMainViewModel,
-                    otherBank = otherBank,
-                    goOtherLocalFast = transferTypeRouter.goOtherLocalFast,
-                    goOtherBakong = transferTypeRouter.goOtherBakong
-                )
-            }
+            val transferMainViewModel = viewModel<TransferMainViewModel>()
+            TransferTypeOtherBankType(
+                transferMainViewModel = transferMainViewModel,
+                otherBank = otherBank,
+                goOtherLocalFast = transferTypeRouter.goOtherLocalFast,
+                goOtherBakong = transferTypeRouter.goOtherBakong
+            )
         }
     }
 }

@@ -1,6 +1,9 @@
 package com.tp.cubc.poc.transfer
 
-import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -67,19 +70,13 @@ fun NavGraphBuilder.transferGraph(navController: NavController) {
         }
     }
 
-    val transferMainViewModelStoreOwner = staticCompositionLocalOf<ViewModelStoreOwner> {
-        TODO("Undefined")
-    }
-
     navigation(TransferRoutes.TransferMain.name, TransferRoutes.TransferIndex.name) {
         composable(TransferRoutes.TransferMain.name) {
-            val transferMainViewModel = viewModel<TransferMainViewModel>(viewModelStoreOwner = transferMainViewModelStoreOwner.current)
-            TransferMainScreen(transferMainViewModel, transferTypesRouter)
+            TransferMainScreen(transferTypeRouter = transferTypesRouter)
         }
         transferTypeGraph(
             routeName = TransferTypeRoutes.TransferTypeIndex.name,
-            navController = navController,
-            transferMainViewModelStoreOwner = transferMainViewModelStoreOwner
+            navController = navController
         )
         cubcTransferGraph(
             routeName = TransferRoutes.Cubc.name,
@@ -92,5 +89,11 @@ fun NavGraphBuilder.transferGraph(navController: NavController) {
         composable(TransferRoutes.OtherBakong.name) { OtherBakongInputScreen() }
         composable(TransferRoutes.OtherLocalFast.name) { LocalFastInputScreen() }
     }
+}
+
+@Composable
+fun rememberViewModelStoreOwner(): ViewModelStoreOwner {
+    val context = LocalContext.current
+    return remember(context) { context as ViewModelStoreOwner }
 }
 

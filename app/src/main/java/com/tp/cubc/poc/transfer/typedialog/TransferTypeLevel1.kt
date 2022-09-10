@@ -20,7 +20,6 @@ import com.tp.cubc.poc.ui.component.Divider
 
 @Composable
 fun TransferTypeLevel1(
-    transferMainViewModel: TransferMainViewModel,
     goCubc: () -> Unit,
     goOtherBank: () -> Unit,
     goBakongWallet: () -> Unit,
@@ -35,7 +34,6 @@ fun TransferTypeLevel1(
     ) {
         TextButton(
             onClick = {
-                transferMainViewModel.transferType.value = TransferType.Cubc
                 goCubc()
             },
             Modifier.padding(4.dp, 8.dp)
@@ -62,5 +60,5 @@ fun TransferTypeLevel1(
 @Preview(name = "phone", device = "spec:shape=Normal,width=375,height=790,unit=dp,dpi=480")
 @Composable
 private fun PreviewScreen() {
-    TransferTypeLevel1 (transferMainViewModel = viewModel(), {}, {}, {})
+    TransferTypeLevel1 ({}, {}, {})
 }

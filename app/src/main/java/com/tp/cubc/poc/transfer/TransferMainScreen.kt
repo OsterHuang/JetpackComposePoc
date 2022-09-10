@@ -14,6 +14,7 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.tp.cubc.poc.ui.bg.BasicBg
@@ -25,11 +26,12 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun TransferMainScreen(
-    transferMainViewModel: TransferMainViewModel,
     transferTypeRouter: TransferTypeRouter
 ) {
     val coroutineScope = rememberCoroutineScope()
-    LaunchedEffect(true) { // Set true to execute on first recomposition
+    val transferMainViewModel = viewModel<TransferMainViewModel>()
+
+    LaunchedEffect(true) { // Set true to execute on first recompositio
         coroutineScope.launch {
             transferMainViewModel.queryAccountList()
         }
@@ -109,7 +111,6 @@ private fun PreviewScreen() {
     val navController = rememberNavController()
     CubcAppTheme() {
         TransferMainScreen(
-            transferMainViewModel = viewModel(),
             TransferTypeRouter(navController)
         )
     }

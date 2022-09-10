@@ -7,6 +7,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.tp.cubc.poc.transfer.TransferMainViewModel
 
 enum class CubcTransferRoutes() {
     Input,
@@ -28,22 +29,17 @@ class TransferTypesRouter (navController: NavController) {
 }
 
 fun NavGraphBuilder.cubcTransferGraph(
-    navController: NavController,
     routeName: String,
+    navController: NavController,
     goNewTransfer: () -> Unit,
     goAccount: () -> Unit,
     goHome: () -> Unit
 ) {
 
     val transferTypesRouter = TransferTypesRouter(navController)
-    var cubcViewModelStoreOwner: ViewModelStoreOwner? = null
 
     navigation(CubcTransferRoutes.Input.name, routeName) {
         composable(CubcTransferRoutes.Input.name) {
-            cubcViewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
-                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-            }
-            val model = viewModel<CubcViewModel>(viewModelStoreOwner = cubcViewModelStoreOwner!!)
             CubcInputScreen(
                 goConfirm = transferTypesRouter.goConfirm
             )

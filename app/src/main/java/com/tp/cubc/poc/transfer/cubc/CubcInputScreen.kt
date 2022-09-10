@@ -10,20 +10,22 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.tp.cubc.poc.R
+import com.tp.cubc.poc.transfer.TransferMainViewModel
 import com.tp.cubc.poc.ui.bg.TreeBg
 import com.tp.cubc.poc.ui.component.TitleText
+import com.tp.cubc.poc.ui.theme.CubcAppTheme
 
 @Composable
-fun CubcInputScreen(goConfirm: () -> Unit) {
+fun CubcInputScreen(transferMainViewModel: TransferMainViewModel = TransferMainViewModel(), goConfirm: () -> Unit) {
 
     TreeBg {
         Column(Modifier.fillMaxSize()) {
+            TitleText("Cubc Input")
+
             Text(
-                stringResource(id = R.string.transfer),
+                text = transferMainViewModel.transferType.value?.name ?: "No type here??? The state is error",
                 color = colorResource(R.color.white)
             )
-
-            TitleText("Cubc Input")
 
             TextField(
                 value = "",
@@ -45,5 +47,7 @@ fun CubcInputScreen(goConfirm: () -> Unit) {
 @Preview(name = "phone", device = "spec:shape=Normal,width=375,height=790,unit=dp,dpi=480")
 @Composable
 private fun PreviewScreen() {
-    CubcInputScreen() {}
+    CubcAppTheme {
+        CubcInputScreen(TransferMainViewModel()) {}
+    }
 }
