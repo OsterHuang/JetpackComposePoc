@@ -14,15 +14,18 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tp.cubc.poc.R
+import com.tp.cubc.poc.transfer.TransferMainViewModel
 import com.tp.cubc.poc.transfer.model.OtherBank
 import com.tp.cubc.poc.ui.component.Divider
 
 @Composable
 fun TransferTypeOtherBankType(
+    transferMainViewModel: TransferMainViewModel,
     otherBank: OtherBank?,
     goOtherLocalFast: () -> Unit,
-    goOtherBakong: () -> Unit
+    goOtherBakong: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -68,6 +71,7 @@ fun TransferTypeOtherBankType(
 @Composable
 private fun PreviewScreen() {
     TransferTypeOtherBankType (
+        transferMainViewModel = viewModel(),
         OtherBank(
             name ="Oster Test",
             isBakong = true,
@@ -75,6 +79,6 @@ private fun PreviewScreen() {
             isLocal = true,
         ),
         {},
-        {}
+        {},
     )
 }

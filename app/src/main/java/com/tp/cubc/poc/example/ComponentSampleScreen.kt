@@ -11,12 +11,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.tp.cubc.poc.R
 import com.tp.cubc.poc.ui.bg.TreeBg
 import com.tp.cubc.poc.ui.component.*
+import com.tp.cubc.poc.ui.component.dropdown.DropdownField
+import com.tp.cubc.poc.ui.component.dropdown.DropdownItemSelectable
 import com.tp.cubc.poc.ui.theme.CubcAppTheme
 import com.tp.cubc.poc.ui.theme.Typography
 import java.util.*
@@ -29,6 +30,15 @@ fun ComponentSampleScreen() {
     val pickedYearState = remember { mutableStateOf(2000) }
     val pickedMonthState = remember { mutableStateOf(5) }
     val pickedDateState = remember { mutableStateOf(20) }
+
+    val dropdownItems = listOf(
+        object: DropdownItemSelectable { override fun getLabel(): String { return "Label 1" }},
+        object: DropdownItemSelectable { override fun getLabel(): String { return "Label 3" }},
+        object: DropdownItemSelectable { override fun getLabel(): String { return "Label 5" }},
+        object: DropdownItemSelectable { override fun getLabel(): String { return "Label 7" }},
+        object: DropdownItemSelectable { override fun getLabel(): String { return "Label 9" }}
+    )
+    var dropdownItemsSelected: DropdownItemSelectable? by remember { mutableStateOf(null) }
 
     var pickedDate by remember{ mutableStateOf(Date()) }
     var pickedDateDailog by remember{ mutableStateOf("2011/04/13") }
@@ -81,12 +91,14 @@ fun ComponentSampleScreen() {
                 Spacer(Modifier.height(16.dp))
 
                 DropdownField(
-                    value = "Oster",
                     label = { Text("People") },
+                    items = dropdownItems,
+                    value = dropdownItemsSelected
                 )
                 DropdownField(
-                    value = "Oster",
                     label = { Text("Disabled Drop down") },
+                    items = dropdownItems,
+                    value = dropdownItemsSelected,
                     enabled = false
                 )
 

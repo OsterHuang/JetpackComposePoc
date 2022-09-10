@@ -1,6 +1,5 @@
-package com.tp.cubc.poc.ui.component
+package com.tp.cubc.poc.ui.component.dropdown
 
-import android.util.Log
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.InteractionSource
@@ -11,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -19,10 +17,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import kotlinx.coroutines.delay
 
 @Composable
-fun DropdownField(
-    value: String = "",
+fun <T: DropdownItemSelectable>DropdownField(
+    modifier: Modifier = Modifier,
+    value: DropdownItemSelectable? = null,
+    items: List<T>? = listOf(),
     label: @Composable (() -> Unit)? = null,
-    onValueChange: (String) -> Unit = {},
+    onValueChange: (T) -> Unit = {},
     placeholder: @Composable (() -> Unit)? = null,
     leadingIcon: @Composable (() -> Unit)? = null,
     isError: Boolean = false,
@@ -33,9 +33,6 @@ fun DropdownField(
         targetValue = if (isExpanded) 0f else 180f
     )
 
-    val items = listOf("A", "B", "C", "D", "E", "F")
-    var selectedIndex by remember { mutableStateOf(0) }
-
     // Clickable - Fix the google bug
     val onClickSource = remember { MutableInteractionSource() }
     val onClick = { if (enabled) isExpanded = true}
@@ -43,11 +40,11 @@ fun DropdownField(
         onClick.invoke()
     }
 
-    Box {
+    Box(modifier) {
         OutlinedTextField(
-            value = items[selectedIndex],
+            value = value?.getLabel() ?: "",
+            onValueChange = {},
             interactionSource = onClickSource,
-            onValueChange = onValueChange,
             label = label,
             placeholder = placeholder,
             leadingIcon = leadingIcon,
@@ -60,7 +57,7 @@ fun DropdownField(
                 )
             },
             isError = isError,
-            modifier = Modifier.clickable(enabled = enabled, onClick = onClick)
+            modifier = Modifier.fillMaxWidth().clickable(enabled = enabled, onClick = onClick)
         )
 
         DropdownMenu(
@@ -68,12 +65,12 @@ fun DropdownField(
             onDismissRequest = { isExpanded = false },
             modifier = Modifier.fillMaxWidth()
         ) {
-            items.forEachIndexed { index, s ->
+            items?.forEachIndexed { _, selectableItem ->
                 DropdownMenuItem(onClick = {
-                    selectedIndex = index
+                    onValueChange(selectableItem)
                     isExpanded = false
                 }) {
-                    Text(text = s)
+                    Text(text = selectableItem.getLabel())
                 }
             }
         }
@@ -109,5 +106,5 @@ fun InteractionSource.collectClickAsState(): State<Boolean> {
 @Preview
 @Composable
 private fun previewComponent() {
-    DropdownField()
+    DropdownField<DropdownItemSelectable>()
 }

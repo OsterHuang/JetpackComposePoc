@@ -23,7 +23,7 @@ fun SplashScreen (
     next: () -> Unit
 ) {
     LaunchedEffect(true) {
-        delay(3000)
+        delay(1400)
         next()
     }
 

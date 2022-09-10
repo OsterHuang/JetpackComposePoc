@@ -1,5 +1,8 @@
 package com.tp.cubc.poc.transfer
 
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -9,7 +12,6 @@ import com.tp.cubc.poc.transfer.bakongwallet.BakongWalletInputScreen
 import com.tp.cubc.poc.transfer.cubc.cubcTransferGraph
 import com.tp.cubc.poc.transfer.otherbakong.OtherBakongInputScreen
 import com.tp.cubc.poc.transfer.otherlocalfast.LocalFastInputScreen
-import com.tp.cubc.poc.transfer.typedialog.TransferTypeRouter
 import com.tp.cubc.poc.transfer.typedialog.TransferTypeRoutes
 import com.tp.cubc.poc.transfer.typedialog.transferTypeGraph
 
@@ -22,8 +24,28 @@ enum class TransferRoutes() {
     OtherBakong
 }
 
-fun NavGraphBuilder.transferGraph(navController: NavController) {
+/**
+ * 還定好轉帳類型後導頁
+ */
+class TransferTypeRouter (navController: NavController) {
+    val openTransferType = {
+        navController.navigate(TransferTypeRoutes.TransferTypeLevel1.name)
+    }
+    val goCubc = {
+        navController.navigate(TransferRoutes.Cubc.name)
+    }
+    val goBakongWallet = {
+        navController.navigate(TransferRoutes.BakongWallet.name)
+    }
+    val goOtherLocalFast = {
+        navController.navigate(TransferRoutes.OtherLocalFast.name)
+    }
+    val goOtherBakong = {
+        navController.navigate(TransferRoutes.OtherBakong.name)
+    }
+}
 
+fun NavGraphBuilder.transferGraph(navController: NavController) {
     val transferTypesRouter = TransferTypeRouter(navController)
 
     val goNewTransfer = {
@@ -45,11 +67,19 @@ fun NavGraphBuilder.transferGraph(navController: NavController) {
         }
     }
 
+    val transferMainViewModelStoreOwner = staticCompositionLocalOf<ViewModelStoreOwner> {
+        TODO("Undefined")
+    }
+
     navigation(TransferRoutes.TransferMain.name, TransferRoutes.TransferIndex.name) {
-        composable(TransferRoutes.TransferMain.name) { TransferMainScreen(transferTypesRouter) }
+        composable(TransferRoutes.TransferMain.name) {
+            val transferMainViewModel = viewModel<TransferMainViewModel>(viewModelStoreOwner = transferMainViewModelStoreOwner.current)
+            TransferMainScreen(transferMainViewModel, transferTypesRouter)
+        }
         transferTypeGraph(
             routeName = TransferTypeRoutes.TransferTypeIndex.name,
-            navController = navController
+            navController = navController,
+            transferMainViewModelStoreOwner = transferMainViewModelStoreOwner
         )
         cubcTransferGraph(
             routeName = TransferRoutes.Cubc.name,

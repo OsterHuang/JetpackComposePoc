@@ -1,5 +1,8 @@
 package com.tp.cubc.poc.transfer.cubc
 
+import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -33,15 +36,25 @@ fun NavGraphBuilder.cubcTransferGraph(
 ) {
 
     val transferTypesRouter = TransferTypesRouter(navController)
+    var cubcViewModelStoreOwner: ViewModelStoreOwner? = null
 
     navigation(CubcTransferRoutes.Input.name, routeName) {
-        composable(CubcTransferRoutes.Input.name) { CubcInputScreen(
-            goConfirm = transferTypesRouter.goConfirm
-        ) }
-        composable(CubcTransferRoutes.Confirm.name) { CubcConfirmScreen(
-            goSuccess = transferTypesRouter.goSuccess,
-            goFailure = transferTypesRouter.goFailure
-        ) }
+        composable(CubcTransferRoutes.Input.name) {
+            cubcViewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
+                "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+            }
+            val model = viewModel<CubcViewModel>(viewModelStoreOwner = cubcViewModelStoreOwner!!)
+            CubcInputScreen(
+                goConfirm = transferTypesRouter.goConfirm
+            )
+        }
+        composable(CubcTransferRoutes.Confirm.name) {
+
+            CubcConfirmScreen(
+                goSuccess = transferTypesRouter.goSuccess,
+                goFailure = transferTypesRouter.goFailure
+            )
+        }
         composable(CubcTransferRoutes.Success.name) { CubcSuccessScreen(
             goNewTransfer,
             goAccount
