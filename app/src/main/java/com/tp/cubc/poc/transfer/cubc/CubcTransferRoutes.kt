@@ -13,21 +13,21 @@ import com.tp.cubc.poc.transfer.TransferMainViewModel
 import com.tp.cubc.poc.transfer.TransferRoutes
 
 enum class CubcTransferRoutes() {
-    Input,
-    Confirm,
-    Success,
-    Failure
+    CubcTransferInput,
+    CubcTransferConfirm,
+    CubcTransferSuccess,
+    CubcTransferFailure
 }
 
-class TransferTypesRouter (navController: NavController) {
+class CubcTransferRouter (navController: NavController) {
     val goConfirm = {
-        navController.navigate(CubcTransferRoutes.Confirm.name)
+        navController.navigate(CubcTransferRoutes.CubcTransferConfirm.name)
     }
     val goSuccess = {
-        navController.navigate(CubcTransferRoutes.Success.name)
+        navController.navigate(CubcTransferRoutes.CubcTransferSuccess.name)
     }
     val goFailure = {
-        navController.navigate(CubcTransferRoutes.Failure.name)
+        navController.navigate(CubcTransferRoutes.CubcTransferFailure.name)
     }
 }
 
@@ -39,31 +39,31 @@ fun NavGraphBuilder.cubcTransferGraph(
     goHome: () -> Unit
 ) {
 
-    val transferTypesRouter = TransferTypesRouter(navController)
+    val cubcTransferRouter = CubcTransferRouter(navController)
 
-    navigation(CubcTransferRoutes.Input.name, routeName) {
-        composable(CubcTransferRoutes.Input.name) { navBackStackEntry ->
+    navigation(CubcTransferRoutes.CubcTransferInput.name, routeName) {
+        composable(CubcTransferRoutes.CubcTransferInput.name) { navBackStackEntry ->
             val parentEntry = remember(navBackStackEntry) {
                 navController.getBackStackEntry(TransferRoutes.TransferMain.name)
             }
             val transferMainViewModel = hiltViewModel<TransferMainViewModel>(parentEntry)
             CubcInputScreen(
                 transferMainViewModel = transferMainViewModel,
-                goConfirm = transferTypesRouter.goConfirm
+                goConfirm = cubcTransferRouter.goConfirm
             )
         }
-        composable(CubcTransferRoutes.Confirm.name) {
+        composable(CubcTransferRoutes.CubcTransferConfirm.name) {
 
             CubcConfirmScreen(
-                goSuccess = transferTypesRouter.goSuccess,
-                goFailure = transferTypesRouter.goFailure
+                goSuccess = cubcTransferRouter.goSuccess,
+                goFailure = cubcTransferRouter.goFailure
             )
         }
-        composable(CubcTransferRoutes.Success.name) { CubcSuccessScreen(
+        composable(CubcTransferRoutes.CubcTransferSuccess.name) { CubcSuccessScreen(
             goNewTransfer,
             goAccount
         ) }
-        composable(CubcTransferRoutes.Failure.name) { CubcFailureScreen(
+        composable(CubcTransferRoutes.CubcTransferFailure.name) { CubcFailureScreen(
             goHome
         ) }
     }

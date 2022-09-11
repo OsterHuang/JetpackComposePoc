@@ -5,8 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.InteractionSource
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -14,11 +13,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 
 @Composable
 fun <T: DropdownItemSelectable>DropdownField(
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier.wrapContentHeight(),
     value: DropdownItemSelectable? = null,
     items: List<T>? = listOf(),
     label: @Composable (() -> Unit)? = null,
@@ -53,7 +53,7 @@ fun <T: DropdownItemSelectable>DropdownField(
                 Icon(
                     imageVector = Icons.Filled.ArrowDropDown,
                     contentDescription = "ArrowDropDown",
-                    modifier = Modifier.rotate(angle),
+                    modifier = Modifier.size(18.dp).rotate(angle),
                 )
             },
             isError = isError,

@@ -12,22 +12,22 @@ import androidx.navigation.compose.navigation
 import com.tp.cubc.poc.transfer.TransferMainViewModel
 import com.tp.cubc.poc.transfer.TransferRoutes
 
-enum class LocalFastRoutes() {
-    Input,
-    Confirm,
-    Success,
-    Failure
+enum class LocalFastTransferRoutes() {
+    LocalFastTransferInput,
+    LocalFastTransferConfirm,
+    LocalFastTransferSuccess,
+    LocalFastTransferFailure
 }
 
-class TransferTypesRouter (navController: NavController) {
+class LocalFastTransferRouter (navController: NavController) {
     val goConfirm = {
-        navController.navigate(LocalFastRoutes.Confirm.name)
+        navController.navigate(LocalFastTransferRoutes.LocalFastTransferConfirm.name)
     }
     val goSuccess = {
-        navController.navigate(LocalFastRoutes.Success.name)
+        navController.navigate(LocalFastTransferRoutes.LocalFastTransferSuccess.name)
     }
     val goFailure = {
-        navController.navigate(LocalFastRoutes.Failure.name)
+        navController.navigate(LocalFastTransferRoutes.LocalFastTransferFailure.name)
     }
 }
 
@@ -39,31 +39,31 @@ fun NavGraphBuilder.localFastTransferGraph(
     goHome: () -> Unit
 ) {
 
-    val transferTypesRouter = TransferTypesRouter(navController)
+    val localFastTransferRouter = LocalFastTransferRouter(navController)
 
-    navigation(LocalFastRoutes.Input.name, routeName) {
-        composable(LocalFastRoutes.Input.name) { navBackStackEntry ->
+    navigation(LocalFastTransferRoutes.LocalFastTransferInput.name, routeName) {
+        composable(LocalFastTransferRoutes.LocalFastTransferInput.name) { navBackStackEntry ->
             val parentEntry = remember(navBackStackEntry) {
                 navController.getBackStackEntry(TransferRoutes.TransferMain.name)
             }
             val transferMainViewModel = hiltViewModel<TransferMainViewModel>(parentEntry)
             LocalFastInputScreen(
                 transferMainViewModel = transferMainViewModel,
-                goConfirm = transferTypesRouter.goConfirm
+                goConfirm = localFastTransferRouter.goConfirm
             )
         }
-        composable(LocalFastRoutes.Confirm.name) {
+        composable(LocalFastTransferRoutes.LocalFastTransferConfirm.name) {
 
             LocalFastConfirmScreen(
-                goSuccess = transferTypesRouter.goSuccess,
-                goFailure = transferTypesRouter.goFailure
+                goSuccess = localFastTransferRouter.goSuccess,
+                goFailure = localFastTransferRouter.goFailure
             )
         }
-        composable(LocalFastRoutes.Success.name) {LocalFastSuccessScreen(
+        composable(LocalFastTransferRoutes.LocalFastTransferSuccess.name) {LocalFastSuccessScreen(
             goNewTransfer,
             goAccount
         ) }
-        composable(LocalFastRoutes.Failure.name) { LocalFastFailureScreen(
+        composable(LocalFastTransferRoutes.LocalFastTransferFailure.name) { LocalFastFailureScreen(
             goHome
         ) }
     }

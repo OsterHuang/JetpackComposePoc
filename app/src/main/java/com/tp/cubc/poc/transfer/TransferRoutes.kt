@@ -11,6 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.tp.cubc.poc.home.HomeRoutes
 import com.tp.cubc.poc.transfer.bakongwallet.BakongWalletInputScreen
+import com.tp.cubc.poc.transfer.bakongwallet.bakongWalletTransferGraph
 import com.tp.cubc.poc.transfer.cubc.cubcTransferGraph
 import com.tp.cubc.poc.transfer.otherbakong.OtherBakongInputScreen
 import com.tp.cubc.poc.transfer.otherlocalfast.LocalFastInputScreen
@@ -86,8 +87,20 @@ fun NavGraphBuilder.transferGraph(navController: NavController) {
             goAccount = goAccount,
             goHome = goHome
         )
-        composable(TransferRoutes.BakongWallet.name) { BakongWalletInputScreen() }
-        composable(TransferRoutes.OtherBakong.name) { OtherBakongInputScreen() }
+        bakongWalletTransferGraph(
+            routeName = TransferRoutes.BakongWallet.name,
+            navController = navController,
+            goNewTransfer = goNewTransfer,
+            goAccount = goAccount,
+            goHome = goHome
+        )
+        bakongWalletTransferGraph(
+            routeName = TransferRoutes.OtherBakong.name,
+            navController = navController,
+            goNewTransfer = goNewTransfer,
+            goAccount = goAccount,
+            goHome = goHome
+        )
         localFastTransferGraph(
             routeName = TransferRoutes.OtherLocalFast.name,
             navController = navController,
