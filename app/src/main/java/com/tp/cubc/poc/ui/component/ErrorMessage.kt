@@ -13,12 +13,15 @@ import com.tp.cubc.poc.R
 
 @Composable
 fun ErrorMessage(
-    text: String,
+    text: String?,
     modifier: Modifier = Modifier,
 ) {
-    Text(
-        modifier = modifier.padding(0.dp, 8.dp),
-        color = MaterialTheme.colors.error,
-        text = text
-    )
+    text?.run {
+        Text(
+            modifier = modifier.padding(12.dp, 4.dp).fillMaxWidth(),
+            color = MaterialTheme.colors.error,
+            style = MaterialTheme.typography.body2,
+            text = text
+        )
+    }
 }

@@ -7,7 +7,7 @@ import com.tp.cubc.poc.transfer.model.BankAccount
 import com.tp.cubc.poc.transfer.model.OtherBank
 import com.tp.cubc.poc.transfer.model.TransferType
 import com.tp.cubc.poc.transfer.model.favorite.TransferFavoriteItem
-import com.tp.cubc.poc.util.CubcCurrency
+import com.tp.cubc.poc.util.constant.CubcCurrency
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import java.math.BigDecimal
@@ -27,9 +27,9 @@ class TransferMainViewModel @Inject constructor(
 
         delay(1200)
         accountList.value = listOf(
-            BankAccount("10031745", BigDecimal("200074"), CubcCurrency.KHR),
-            BankAccount("10035771", BigDecimal("5568"), CubcCurrency.KHR),
-            BankAccount("800031552", BigDecimal("3111.75"), CubcCurrency.USD),
+            BankAccount("10031745", "My HKR 1", BigDecimal("200074"), CubcCurrency.KHR),
+            BankAccount("10035771", "My HKR 2", BigDecimal("5568"), CubcCurrency.KHR),
+            BankAccount("800031552", "MY USD 1", BigDecimal("3111.75"), CubcCurrency.USD),
         )
     }
 }

@@ -2,9 +2,6 @@ package com.tp.cubc.poc.transfer.cubc
 
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -24,10 +21,18 @@ class CubcTransferRouter (navController: NavController) {
         navController.navigate(CubcTransferRoutes.CubcTransferConfirm.name)
     }
     val goSuccess = {
-        navController.navigate(CubcTransferRoutes.CubcTransferSuccess.name)
+        navController.navigate(CubcTransferRoutes.CubcTransferSuccess.name) {
+            popUpTo(TransferRoutes.TransferMain.name) {
+                inclusive = true
+            }
+        }
     }
     val goFailure = {
-        navController.navigate(CubcTransferRoutes.CubcTransferFailure.name)
+        navController.navigate(CubcTransferRoutes.CubcTransferFailure.name) {
+            popUpTo(TransferRoutes.TransferMain.name) {
+                inclusive = true
+            }
+        }
     }
 }
 
@@ -38,25 +43,43 @@ fun NavGraphBuilder.cubcTransferGraph(
     goAccount: () -> Unit,
     goHome: () -> Unit
 ) {
+    val goBack = fun() {
+        navController.popBackStack()
+    }
 
     val cubcTransferRouter = CubcTransferRouter(navController)
 
     navigation(CubcTransferRoutes.CubcTransferInput.name, routeName) {
         composable(CubcTransferRoutes.CubcTransferInput.name) { navBackStackEntry ->
-            val parentEntry = remember(navBackStackEntry) {
+            val transferMainEntry = remember(navBackStackEntry) {
                 navController.getBackStackEntry(TransferRoutes.TransferMain.name)
             }
-            val transferMainViewModel = hiltViewModel<TransferMainViewModel>(parentEntry)
+            val transferMainViewModel = hiltViewModel<TransferMainViewModel>(transferMainEntry)
+
+            val cubcTransferViewModel = hiltViewModel<CubcTransferViewModel>()
             CubcInputScreen(
                 transferMainViewModel = transferMainViewModel,
+                cubcTransferViewModel = cubcTransferViewModel,
                 goConfirm = cubcTransferRouter.goConfirm
             )
         }
-        composable(CubcTransferRoutes.CubcTransferConfirm.name) {
+        composable(CubcTransferRoutes.CubcTransferConfirm.name) { navBackStackEntry ->
+            val transferMainEntry = remember(navBackStackEntry) {
+                navController.getBackStackEntry(TransferRoutes.TransferMain.name)
+            }
+            val transferMainViewModel = hiltViewModel<TransferMainViewModel>(transferMainEntry)
+
+            val cubcTransferInputEntry = remember(navBackStackEntry) {
+                navController.getBackStackEntry(CubcTransferRoutes.CubcTransferInput.name)
+            }
+            val cubcTransferViewModel = hiltViewModel<CubcTransferViewModel>(cubcTransferInputEntry)
 
             CubcConfirmScreen(
+                transferMainViewModel = transferMainViewModel,
+                cubcTransferViewModel = cubcTransferViewModel,
                 goSuccess = cubcTransferRouter.goSuccess,
-                goFailure = cubcTransferRouter.goFailure
+                goFailure = cubcTransferRouter.goFailure,
+                goBack = goBack,
             )
         }
         composable(CubcTransferRoutes.CubcTransferSuccess.name) { CubcSuccessScreen(

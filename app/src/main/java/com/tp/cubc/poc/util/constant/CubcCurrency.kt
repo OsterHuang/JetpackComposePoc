@@ -1,4 +1,4 @@
-package com.tp.cubc.poc.util
+package com.tp.cubc.poc.util.constant
 
 import com.tp.cubc.poc.ui.component.dropdown.DropdownItemSelectable
 

@@ -59,7 +59,7 @@ fun TransferMainScreen(
 
             BottomButtonArea {
                 Button(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().height(42.dp),
                     enabled =  false,
                     onClick = {}
                 ) {

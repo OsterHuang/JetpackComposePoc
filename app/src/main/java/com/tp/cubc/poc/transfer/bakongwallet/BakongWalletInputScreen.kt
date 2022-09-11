@@ -17,9 +17,8 @@ import com.tp.cubc.poc.ui.component.BottomButtonArea
 import com.tp.cubc.poc.ui.component.RoundedBorderColumn
 import com.tp.cubc.poc.ui.component.TopBarTitleText
 import com.tp.cubc.poc.ui.component.dropdown.DropdownField
-import com.tp.cubc.poc.ui.component.dropdown.DropdownItemSelectable
 import com.tp.cubc.poc.ui.theme.CubcAppTheme
-import com.tp.cubc.poc.util.CubcCurrency
+import com.tp.cubc.poc.util.constant.CubcCurrency
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
 
@@ -93,7 +92,7 @@ fun BakongWalletInputScreen(
 
             BottomButtonArea {
                 Button(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().height(42.dp),
                     onClick = { goConfirm() }
                 ) {
                     Text("Next")
@@ -108,7 +107,7 @@ fun BakongWalletInputScreen(
 @Composable
 private fun PreviewBakongWalletInputScreen() {
     val transferMainViewModel = TransferMainViewModel(Application()).apply {
-        fromAccount.value = BankAccount("1072-6644017", BigDecimal("2174.63"), CubcCurrency.USD)
+        fromAccount.value = BankAccount("1072-6644017", "Account Nickname", BigDecimal("2174.63"), CubcCurrency.USD)
         transferType.value = TransferType.Bakong
     }
 

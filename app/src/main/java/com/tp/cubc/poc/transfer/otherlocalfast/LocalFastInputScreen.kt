@@ -10,10 +10,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.tp.cubc.poc.R
 import com.tp.cubc.poc.transfer.TransferMainTopRegion
 import com.tp.cubc.poc.transfer.TransferMainViewModel
 import com.tp.cubc.poc.transfer.model.BankAccount
@@ -22,11 +20,8 @@ import com.tp.cubc.poc.ui.bg.BasicBg
 import com.tp.cubc.poc.ui.component.BottomButtonArea
 import com.tp.cubc.poc.ui.component.RoundedBorderColumn
 import com.tp.cubc.poc.ui.component.TopBarTitleText
-import com.tp.cubc.poc.ui.component.dropdown.DropdownField
-import com.tp.cubc.poc.ui.component.dropdown.DropdownItemSelectable
 import com.tp.cubc.poc.ui.theme.CubcAppTheme
-import com.tp.cubc.poc.ui.theme.Green500
-import com.tp.cubc.poc.util.CubcCurrency
+import com.tp.cubc.poc.util.constant.CubcCurrency
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
 
@@ -101,7 +96,7 @@ fun LocalFastInputScreen(
                 }
 
                 Button(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().height(42.dp),
                     onClick = { goConfirm() }
                 ) {
                     Text("Next")
@@ -116,7 +111,7 @@ fun LocalFastInputScreen(
 @Composable
 private fun PreviewLocalFastInputScreen() {
     val transferMainViewModel = TransferMainViewModel(Application()).apply {
-        fromAccount.value = BankAccount("1072-6644017", BigDecimal("2174.63"), CubcCurrency.USD)
+        fromAccount.value = BankAccount("1072-6644017", "From Acc1", BigDecimal("2174.63"), CubcCurrency.USD)
         transferType.value = TransferType.Cubc
     }
 
