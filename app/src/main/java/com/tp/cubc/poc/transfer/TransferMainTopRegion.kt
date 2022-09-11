@@ -56,7 +56,7 @@ fun TransferMainTopRegion(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentWidth(Alignment.End),
-            text = "Balance: ${transferMainViewModel.fromAccount.value?.balance}",
+            text = "Balance: ${currency.symbol}${balance}",
             fontSize = 12.sp
         )
     }

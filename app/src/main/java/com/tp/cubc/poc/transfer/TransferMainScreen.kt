@@ -8,12 +8,14 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
 import com.tp.cubc.poc.ui.bg.BasicBg
+import com.tp.cubc.poc.ui.component.BottomButtonArea
 import com.tp.cubc.poc.ui.component.RoundedBorderColumn
 import com.tp.cubc.poc.ui.component.TopBarTitleText
 import com.tp.cubc.poc.ui.theme.CubcAppTheme
@@ -30,6 +32,8 @@ fun TransferMainScreen(
         coroutineScope.launch {
             transferMainViewModel.queryAccountList()
         }
+        transferMainViewModel.transferToBank.value = null
+        transferMainViewModel.transferType.value = null
     }
 
     BasicBg {
@@ -48,17 +52,19 @@ fun TransferMainScreen(
                     transferMainViewModel = transferMainViewModel,
                     transferTypeRouter = transferTypeRouter,
                 )
+               Spacer(Modifier.height(12.dp))
             }
 
             Spacer(Modifier.weight(1f))
 
-            Button(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                onClick = {}
-            ) {
-                Text("Next")
+            BottomButtonArea {
+                Button(
+                    modifier = Modifier.fillMaxWidth(),
+                    enabled =  false,
+                    onClick = {}
+                ) {
+                    Text("Next")
+                }
             }
         }
     }
