@@ -30,7 +30,7 @@ enum class TransferRoutes() {
  * 還定好轉帳類型後導頁
  */
 class TransferTypeRouter (navController: NavController) {
-    val openTransferType = {
+    val goOpenTransferType = {
         navController.navigate(TransferTypeRoutes.TransferTypeLevel1.name)
     }
     val goCubc = {

@@ -13,6 +13,9 @@ import androidx.compose.ui.unit.dp
 import com.tp.cubc.poc.R
 import com.tp.cubc.poc.transfer.TransferFavoriteScreen
 
+/**
+ * @Deprecated Use material 1 compose instead
+ */
 @Composable
 fun Divider(
     color: Color = colorResource(id = R.color.gray_300),

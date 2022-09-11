@@ -1,11 +1,10 @@
 package com.tp.cubc.poc.transfer.typedialog
 
+import android.app.Application
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
@@ -14,17 +13,14 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tp.cubc.poc.R
 import com.tp.cubc.poc.transfer.TransferMainViewModel
 import com.tp.cubc.poc.transfer.model.OtherBank
-import com.tp.cubc.poc.ui.component.Divider
+import com.tp.cubc.poc.transfer.model.TransferType
 
 @Composable
 fun TransferTypeOtherBankType(
     transferMainViewModel: TransferMainViewModel,
-    otherBank: OtherBank?,
     goOtherLocalFast: () -> Unit,
     goOtherBakong: () -> Unit,
 ) {
@@ -32,35 +28,52 @@ fun TransferTypeOtherBankType(
         modifier = Modifier
             .padding(8.dp, 15.dp)
             .width(340.dp)
-            .height(200.dp)
+//            .height(200.dp)
+            .wrapContentHeight()
             .background(
                 color = colorResource(id = R.color.white),
                 shape = RoundedCornerShape(30.dp)
             ),
     ) {
-        if (otherBank?.isBakong == true) {
+        val isBakong = transferMainViewModel.transferToBank.value?.isBakong ?: false
+        val isFast = transferMainViewModel.transferToBank.value?.isFast ?: false
+        val isLocal = transferMainViewModel.transferToBank.value?.isLocal ?: false
+
+        if (isBakong) {
             TextButton(
-                onClick = goOtherBakong,
+                onClick = {
+                    transferMainViewModel.transferType.value = TransferType.Bakong
+                    goOtherBakong()
+                },
                 Modifier.padding(4.dp, 8.dp)
             ) {
                 Text(stringResource(id = R.string.bakong))
             }
-            Divider()
         }
 
-        if (otherBank?.isFast == true) {
+        if (isBakong && isFast) Divider()
+
+        if (isFast) {
             TextButton(
-                onClick = goOtherLocalFast,
+                onClick = {
+                    transferMainViewModel.transferType.value = TransferType.Fast
+                    goOtherLocalFast()
+                },
                 Modifier.padding(4.dp, 8.dp)
             ) {
                 Text(stringResource(id = R.string.fast_transfer))
             }
-            Divider()
         }
 
-        if (otherBank?.isLocal == true) {
+        if (isFast && isLocal) Divider()
+
+        if (isLocal) {
+            Divider()
             TextButton(
-                onClick = goOtherLocalFast,
+                onClick = {
+                    transferMainViewModel.transferType.value = TransferType.Local
+                    goOtherLocalFast()
+                },
                 Modifier.padding(4.dp, 8.dp)
             ) {
                 Text(stringResource(id = R.string.local_bank_transfer))
@@ -72,14 +85,16 @@ fun TransferTypeOtherBankType(
 @Preview(name = "phone", device = "spec:shape=Normal,width=375,height=790,unit=dp,dpi=480")
 @Composable
 private fun PreviewScreen() {
+    val transferMainViewModel = TransferMainViewModel(Application())
+    transferMainViewModel.transferToBank.value = OtherBank(
+        "Preivew the bank type",
+        isBakong = true,
+        isLocal = true,
+        isFast = true
+    )
+
     TransferTypeOtherBankType (
-        transferMainViewModel = hiltViewModel(),
-        OtherBank(
-            name ="Oster Test",
-            isBakong = true,
-            isFast = true,
-            isLocal = true,
-        ),
+        transferMainViewModel = transferMainViewModel,
         {},
         {},
     )

@@ -44,17 +44,15 @@ fun NavGraphBuilder.transferTypeGraph(
     val transferTypeDialogRouter = TransferTypeDialogRouter(navController)
     val transferTypeRouter = TransferTypeRouter(navController)
 
-    var otherBank: OtherBank? = null
-
     navigation(
         startDestination = TransferRoutes.TransferMain.name,
         route = routeName
     ) {
         dialog(TransferTypeRoutes.TransferTypeLevel1.name) { navBackStackEntry ->
-            val parentEntry = remember(navBackStackEntry) {
+            val transferMainEntry = remember(navBackStackEntry) {
                 navController.getBackStackEntry(TransferRoutes.TransferMain.name)
             }
-            val transferMainViewModel = hiltViewModel<TransferMainViewModel>(parentEntry)
+            val transferMainViewModel = hiltViewModel<TransferMainViewModel>(transferMainEntry)
 
             TransferTypeLevel1(
                 transferMainViewModel = transferMainViewModel,
@@ -66,9 +64,14 @@ fun NavGraphBuilder.transferTypeGraph(
         dialog(
             route = TransferTypeRoutes.TransferTypeOtherBank.name,
             dialogProperties = DialogProperties(usePlatformDefaultWidth = false)
-        ) {
+        ) { navBackStackEntry ->
+            val transferMainEntry = remember(navBackStackEntry) {
+                navController.getBackStackEntry(TransferRoutes.TransferMain.name)
+            }
+            val transferMainViewModel = hiltViewModel<TransferMainViewModel>(transferMainEntry)
+
             TransferTypeOtherBank(
-                chooseBank = { it -> otherBank = it } ,
+                transferMainViewModel = transferMainViewModel ,
                 goOtherBankType = transferTypeDialogRouter.goOtherBankType
             )
         }
@@ -76,13 +79,12 @@ fun NavGraphBuilder.transferTypeGraph(
             route = TransferTypeRoutes.TransferTypeOtherBankType.name,
             dialogProperties = DialogProperties(usePlatformDefaultWidth = true)
         ) { navBackStackEntry ->
-            val parentEntry = remember(navBackStackEntry) {
+            val transferMainEntry = remember(navBackStackEntry) {
                 navController.getBackStackEntry(TransferRoutes.TransferMain.name)
             }
-            val transferMainViewModel = hiltViewModel<TransferMainViewModel>(parentEntry)
+            val transferMainViewModel = hiltViewModel<TransferMainViewModel>(transferMainEntry)
             TransferTypeOtherBankType(
                 transferMainViewModel = transferMainViewModel,
-                otherBank = otherBank,
                 goOtherLocalFast = transferTypeRouter.goOtherLocalFast,
                 goOtherBakong = transferTypeRouter.goOtherBakong
             )

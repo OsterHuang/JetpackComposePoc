@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import com.tp.cubc.poc.transfer.model.BankAccount
+import com.tp.cubc.poc.transfer.model.OtherBank
 import com.tp.cubc.poc.transfer.model.TransferType
 import com.tp.cubc.poc.transfer.model.favorite.TransferFavoriteItem
 import com.tp.cubc.poc.util.CubcCurrency
@@ -18,6 +19,7 @@ class TransferMainViewModel @Inject constructor(
 ): AndroidViewModel(app) {
     val accountList = mutableStateOf<List<BankAccount>?>(listOf())
     val fromAccount = mutableStateOf<BankAccount?>(null)
+    val transferToBank = mutableStateOf<OtherBank?>(null)
     val transferType = mutableStateOf<TransferType?>(null)
     val transferFavoriteItem = mutableStateOf<TransferFavoriteItem?>(null)
 

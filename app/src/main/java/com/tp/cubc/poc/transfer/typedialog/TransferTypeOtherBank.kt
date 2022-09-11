@@ -1,5 +1,6 @@
 package com.tp.cubc.poc.transfer.typedialog
 
+import android.app.Application
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -17,14 +18,16 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
 import com.tp.cubc.poc.R
+import com.tp.cubc.poc.transfer.TransferMainViewModel
 import com.tp.cubc.poc.transfer.model.OtherBank
 import com.tp.cubc.poc.ui.component.Divider
 
 
 @Composable
 fun TransferTypeOtherBank(
-    chooseBank: (OtherBank) -> Unit,
+    transferMainViewModel: TransferMainViewModel,
     goOtherBankType: () -> Unit
 ) {
     val mutableState = remember { mutableStateOf(arrayOf(
@@ -48,20 +51,20 @@ fun TransferTypeOtherBank(
         LazyColumn(
             Modifier.padding(8.dp, 16.dp)
         ) {
-            items(mutableState.value.size) {
                 mutableState.value.forEach { otherBank ->
-                    TextButton(
-                        onClick = {
-                            chooseBank(otherBank)
-                            goOtherBankType()
-                        },
-                        Modifier.padding(4.dp, 4.dp)
-                    ) {
-                        Text(otherBank.name)
+                    item {
+                        TextButton(
+                            onClick = {
+                                transferMainViewModel.transferToBank.value = otherBank
+                                goOtherBankType()
+                            },
+                            Modifier.padding(4.dp, 4.dp)
+                        ) {
+                            Text(otherBank.name)
+                        }
+                        Divider()
                     }
-                    Divider()
                 }
-            }
         }
 
     }
@@ -70,5 +73,6 @@ fun TransferTypeOtherBank(
 @Preview(name = "phone", device = "spec:shape=Normal,width=375,height=790,unit=dp,dpi=480")
 @Composable
 private fun PreviewScreen() {
-    TransferTypeOtherBank ({}) {}
+    val transferMainViewModel = TransferMainViewModel(Application())
+    TransferTypeOtherBank (transferMainViewModel) {}
 }
