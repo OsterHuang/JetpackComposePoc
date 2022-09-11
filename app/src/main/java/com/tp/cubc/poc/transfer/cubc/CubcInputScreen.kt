@@ -79,7 +79,10 @@ fun CubcInputScreen(
                     value = cubcTransferViewModel.toAccount.value ?: "",
                     label = { Text("Beneficiary Account Number") },
                     modifier = Modifier.fillMaxWidth(),
-                    onValueChange = { cubcTransferViewModel.toAccount.value = it }
+                    onValueChange = {
+                        cubcTransferViewModel.toAccount.value = it
+                        cubcTransferViewModel.toAccountError.value = null
+                    }
                 )
                 ErrorMessage(cubcTransferViewModel.toAccountError.value)
                 Spacer(Modifier.height(12.dp))
@@ -92,6 +95,7 @@ fun CubcInputScreen(
                     modifier = Modifier.fillMaxWidth(),
                     onValueChange = {
                         cubcTransferViewModel.transferAmount.value = if (it.isNullOrBlank()) null else BigDecimal(it)
+                        cubcTransferViewModel.transferAmountError.value = null
                     }
                 )
                 ErrorMessage(cubcTransferViewModel.transferAmountError.value)
