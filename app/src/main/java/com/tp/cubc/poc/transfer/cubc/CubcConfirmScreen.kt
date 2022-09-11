@@ -52,6 +52,13 @@ fun CubcConfirmScreen(
         SimpleDateFormat("yyyy/MM/dd").format(this) + " (Immediate)"
     }
 
+    val transactionDetailItems = listOf(
+        TransactionDetailItem("Transfer Amount", computedAmount),
+        TransactionDetailItem("Beneficiary Account Number", cubcTransferViewModel.toAccount.value ?: ""),
+        TransactionDetailItem("From Account", computedFromAccount),
+        TransactionDetailItem("Transfer Date", computedTransferDate),
+    )
+
     BasicBg {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -68,45 +75,7 @@ fun CubcConfirmScreen(
                 modifier = Modifier.padding(16.dp, 20.dp, 16.dp, 4.dp)
             )
 
-            RoundedBorderColumn(horizontalAlignment = Alignment.Start) {
-                Subtitle2(
-                    text = "Transfer Amount"
-                )
-                ValueText(
-                    text = computedAmount,
-                    modifier = valueTextModifier
-                )
-                Divider()
-                Spacer(Modifier.height(12.dp))
-
-                Subtitle2(
-                    text = "Beneficiary Account",
-                )
-                ValueText(
-                    text = cubcTransferViewModel.toAccount.value ?: "",
-                    modifier = valueTextModifier
-                )
-                Divider()
-                Spacer(Modifier.height(12.dp))
-
-                Subtitle2(
-                    text = "From Account",
-                )
-                ValueText(
-                    text = computedFromAccount,
-                    modifier = valueTextModifier
-                )
-                Divider()
-                Spacer(Modifier.height(12.dp))
-
-                Subtitle2(
-                    text = "Transfer Date",
-                )
-                ValueText(
-                    text = computedTransferDate,
-                    modifier = valueTextModifier
-                )
-            }
+            TransactionDetail(transactionDetailItems)
 
             Subtitle(
                 text = "Verification Method",
