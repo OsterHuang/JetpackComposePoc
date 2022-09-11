@@ -60,7 +60,7 @@ fun TransferMainTopRegion(
             fontSize = 12.sp
         )
     }
-    Spacer(Modifier.height(16.dp))
+    Spacer(Modifier.height(12.dp))
 
     OutlinedTextField(
         value = txtTransferTo,
@@ -83,6 +83,7 @@ fun TransferMainTopRegion(
     )
 
     if (txtTransferType.isNotBlank()) {
+        Spacer(Modifier.height(12.dp))
         OutlinedTextField(
             value = txtTransferType,
             enabled = false,
