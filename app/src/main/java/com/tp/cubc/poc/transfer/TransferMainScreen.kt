@@ -1,6 +1,7 @@
 package com.tp.cubc.poc.transfer
 
 import android.app.Application
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -13,7 +14,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
+import com.tp.cubc.poc.app.CubcAppViewModel
 import com.tp.cubc.poc.ui.bg.BasicBg
 import com.tp.cubc.poc.ui.component.BottomButtonArea
 import com.tp.cubc.poc.ui.component.RoundedBorderColumn
@@ -27,15 +30,6 @@ fun TransferMainScreen(
     transferMainViewModel: TransferMainViewModel,
     transferTypeRouter: TransferTypeRouter,
 ) {
-    val coroutineScope = rememberCoroutineScope()
-    LaunchedEffect(true) { // Set true to execute on first recompositio
-        coroutineScope.launch {
-            transferMainViewModel.queryAccountList()
-        }
-        transferMainViewModel.transferToBank.value = null
-        transferMainViewModel.transferType.value = null
-    }
-
     BasicBg {
         Column(
             modifier = Modifier.fillMaxSize(),

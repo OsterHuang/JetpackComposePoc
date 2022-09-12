@@ -1,6 +1,8 @@
 package com.tp.cubc.poc.transfer.cubc
 
 import android.app.Application
+import androidx.activity.ComponentActivity
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -9,11 +11,16 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tp.cubc.poc.R
+import com.tp.cubc.poc.app.CubcAppViewModel
 import com.tp.cubc.poc.transfer.TransferMainTopRegion
 import com.tp.cubc.poc.transfer.TransferMainViewModel
 import com.tp.cubc.poc.transfer.model.BankAccount
@@ -38,13 +45,6 @@ fun CubcInputScreen(
     cubcTransferViewModel: CubcTransferViewModel,
     goConfirm: () -> Unit,
 ) {
-    val coroutineScope = rememberCoroutineScope()
-    LaunchedEffect(true) { // Set true to execute on first recompositio
-        coroutineScope.launch {
-            transferMainViewModel.queryAccountList()
-        }
-    }
-
     // Computed
     val textTransferDate = cubcTransferViewModel.transferDate.value.run {
         SimpleDateFormat("yyyy/MM/dd").format(this) + " (Immediate)"
@@ -130,7 +130,9 @@ fun CubcInputScreen(
 
             BottomButtonArea {
                 Button(
-                    modifier = Modifier.fillMaxWidth().height(42.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(42.dp),
                     onClick = { clickNext() }
                 ) {
                     Text("Next")
@@ -139,7 +141,6 @@ fun CubcInputScreen(
         }
     }
 }
-
 
 @Preview(name = "phone", device = "spec:shape=Normal,width=375,height=790,unit=dp,dpi=480")
 @Composable

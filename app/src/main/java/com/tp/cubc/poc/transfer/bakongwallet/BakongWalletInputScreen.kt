@@ -27,13 +27,6 @@ fun BakongWalletInputScreen(
     transferMainViewModel: TransferMainViewModel,
     goConfirm: () -> Unit,
 ) {
-    val coroutineScope = rememberCoroutineScope()
-    LaunchedEffect(true) { // Set true to execute on first recompositio
-        coroutineScope.launch {
-            transferMainViewModel.queryAccountList()
-        }
-    }
-
     var chosenCurrency by remember { mutableStateOf(CubcCurrency.USD) }
     val currencyItems = listOf(
         CubcCurrency.USD,

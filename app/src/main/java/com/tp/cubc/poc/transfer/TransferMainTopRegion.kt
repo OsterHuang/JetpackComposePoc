@@ -1,6 +1,7 @@
 package com.tp.cubc.poc.transfer
 
 import android.app.Application
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
@@ -14,13 +15,17 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
+import com.tp.cubc.poc.app.CubcAppViewModel
 import com.tp.cubc.poc.ui.component.RoundedBorderColumn
 import com.tp.cubc.poc.ui.component.dropdown.DropdownField
 import com.tp.cubc.poc.ui.theme.CubcAppTheme
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
@@ -29,11 +34,14 @@ fun TransferMainTopRegion(
     transferMainViewModel: TransferMainViewModel,
     transferTypeRouter: TransferTypeRouter? = null, // 只有TransferMain需要開啟轉帳類型Dialog
 ) {
-    val coroutineScope = rememberCoroutineScope()
+    val appViewModel: CubcAppViewModel = viewModel(LocalContext.current as ComponentActivity)
 
-    LaunchedEffect(true) { // Set true to execute on first recomposition
+    val coroutineScope = rememberCoroutineScope()
+    LaunchedEffect(transferMainViewModel.toString()) { // Set true to execute on first recompositio
         coroutineScope.launch {
+            appViewModel.loading.value++
             transferMainViewModel.queryAccountList()
+            appViewModel.loading.value--
         }
     }
 

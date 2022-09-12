@@ -17,7 +17,7 @@ import javax.inject.Inject
 class TransferMainViewModel @Inject constructor(
     app: Application
 ): AndroidViewModel(app) {
-    val accountList = mutableStateOf<List<BankAccount>?>(listOf())
+    val accountList = mutableStateOf<List<BankAccount>>(listOf())
     val fromAccount = mutableStateOf<BankAccount?>(null)
     val transferToBank = mutableStateOf<OtherBank?>(null)
     val transferType = mutableStateOf<TransferType?>(null)
@@ -31,6 +31,10 @@ class TransferMainViewModel @Inject constructor(
             BankAccount("10035771", "My HKR 2", BigDecimal("5568"), CubcCurrency.KHR),
             BankAccount("800031552", "MY USD 1", BigDecimal("3111.75"), CubcCurrency.USD),
         )
+        if (accountList.value.isNotEmpty()) {
+            fromAccount.value = accountList.value[0]
+        }
+
     }
 }
 
