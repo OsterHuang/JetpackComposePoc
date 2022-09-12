@@ -1,5 +1,6 @@
 package com.tp.cubc.poc.transfer.cubc
 
+import android.os.Bundle
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -8,6 +9,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.tp.cubc.poc.transfer.TransferMainViewModel
 import com.tp.cubc.poc.transfer.TransferRoutes
+import com.tp.cubc.poc.transfer.cubc.CubcConstant.Companion.ARG_SUCCESS_RESULT_DETAIL
+import com.tp.cubc.poc.ui.component.TransactionDetailItem
 
 enum class CubcTransferRoutes() {
     CubcTransferInput,
@@ -20,12 +23,17 @@ class CubcTransferRouter (navController: NavController) {
     val goConfirm = {
         navController.navigate(CubcTransferRoutes.CubcTransferConfirm.name)
     }
-    val goSuccess = {
-        navController.navigate(CubcTransferRoutes.CubcTransferSuccess.name) {
-            popUpTo(TransferRoutes.TransferMain.name) {
-                inclusive = true
-            }
+    val goSuccess = fun(resultDetail: CubcSuccessResultDetail) {
+        /**
+         * 因為 popUpTo(TransferRoutes.TransferMain.name) { inclusive = true } 把viewModel都回收了，
+         * 所以這邊必須要把數據用參數的方式傳入成功頁
+         */
+        navController.navigate(
+            route = CubcTransferRoutes.CubcTransferSuccess.name
+        ) {
+            popUpTo(TransferRoutes.TransferMain.name) { inclusive = true }
         }
+        navController.currentBackStackEntry?.arguments?.putParcelable(ARG_SUCCESS_RESULT_DETAIL, resultDetail)
     }
     val goFailure = {
         navController.navigate(CubcTransferRoutes.CubcTransferFailure.name) {
@@ -82,10 +90,15 @@ fun NavGraphBuilder.cubcTransferGraph(
                 goBack = goBack,
             )
         }
-        composable(CubcTransferRoutes.CubcTransferSuccess.name) { CubcSuccessScreen(
-            goNewTransfer,
-            goAccount
-        ) }
+        composable(CubcTransferRoutes.CubcTransferSuccess.name) {
+            val cubcSuccessResultDetail = it//navController.previousBackStackEntry
+                ?.arguments?.getParcelable<CubcSuccessResultDetail>(ARG_SUCCESS_RESULT_DETAIL)
+
+            CubcSuccessScreen(
+                resultDetail = cubcSuccessResultDetail ?: CubcSuccessResultDetail(),
+                goNewTransfer = goNewTransfer,
+                goAccount = goAccount)
+        }
         composable(CubcTransferRoutes.CubcTransferFailure.name) { CubcFailureScreen(
             goHome
         ) }

@@ -1,5 +1,7 @@
 package com.tp.cubc.poc.ui.component
 
+import android.os.Parcel
+import android.os.Parcelable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -9,8 +11,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.tp.cubc.poc.ui.theme.CubcAppTheme
 import com.tp.cubc.poc.ui.theme.Green600
+import kotlinx.parcelize.Parcelize
 
-class TransactionDetailItem(val label: String, val value: String)
+@Parcelize
+class TransactionDetailItem(val label: String, val value: String): Parcelable
 
 @Composable
 fun TransactionDetail(

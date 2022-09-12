@@ -34,16 +34,28 @@ import java.text.SimpleDateFormat
 fun CubcConfirmScreen(
     transferMainViewModel: TransferMainViewModel,
     cubcTransferViewModel: CubcTransferViewModel,
-    goSuccess: () -> Unit,
+    goSuccess: (CubcSuccessResultDetail) -> Unit,
     goFailure: () -> Unit,
     goBack: () -> Unit,
 ) {
-    val valueTextModifier = Modifier.padding(0.dp, 10.dp)
-
-    val clickNext = fun() {
-        goSuccess()
+    // -- private fun --
+    val clickToSuccessPage = fun() {
+        val computedAmount = "${transferMainViewModel.fromAccount.value?.currency?.symbol}${cubcTransferViewModel.transferAmount.value}"
+        val computedFromAccount = transferMainViewModel.fromAccount.value?.run {
+            "${currency.name} $accountNo $nickname "
+        } ?: "---"
+        val computedTransferDate = cubcTransferViewModel.transferDate.value.run {
+            SimpleDateFormat("yyyy/MM/dd").format(this) + " (Immediate)"
+        }
+        goSuccess(CubcSuccessResultDetail(
+            transferAmount = computedAmount,
+            toAccount = cubcTransferViewModel.toAccount.value ?: "",
+            fromAccount = computedFromAccount,
+            transferDate = computedTransferDate
+        ))
     }
 
+    // -- Display Computed --
     val computedAmount = "${transferMainViewModel.fromAccount.value?.currency?.symbol}${cubcTransferViewModel.transferAmount.value}"
     val computedFromAccount = transferMainViewModel.fromAccount.value?.run {
         "${currency.name} $accountNo $nickname "
@@ -99,7 +111,7 @@ fun CubcConfirmScreen(
             BottomButtonArea {
                 Button(
                     modifier = Modifier.fillMaxWidth().height(42.dp),
-                    onClick = { clickNext() }
+                    onClick = { clickToSuccessPage() }
                 ) {
                     Text("Next")
                 }

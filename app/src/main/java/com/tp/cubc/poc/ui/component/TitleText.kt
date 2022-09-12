@@ -2,6 +2,7 @@ package com.tp.cubc.poc.ui.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,7 +20,7 @@ fun TitleText(
         style = com.tp.cubc.poc.ui.theme.Typography.h3,
         modifier = modifier.padding(16.dp),
 //        fontSize = 24.sp,
-//        color = colorResource(id = R.color.white) ,
+        color = MaterialTheme.colors.onPrimary,
         text = text
     )
 }

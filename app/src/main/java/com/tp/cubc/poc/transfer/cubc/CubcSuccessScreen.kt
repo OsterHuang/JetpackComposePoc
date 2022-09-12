@@ -1,41 +1,86 @@
 package com.tp.cubc.poc.transfer.cubc
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Button
-import androidx.compose.material.Text
+import android.app.Application
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.tp.cubc.poc.R
+import com.tp.cubc.poc.transfer.TransferMainViewModel
+import com.tp.cubc.poc.transfer.model.BankAccount
+import com.tp.cubc.poc.transfer.model.TransferType
+import com.tp.cubc.poc.ui.bg.BasicBg
 import com.tp.cubc.poc.ui.bg.TreeBg
-import com.tp.cubc.poc.ui.component.TitleText
+import com.tp.cubc.poc.ui.component.*
+import com.tp.cubc.poc.ui.theme.CubcAppTheme
+import com.tp.cubc.poc.util.constant.CubcCurrency
+import java.math.BigDecimal
+import java.text.SimpleDateFormat
 
 @Composable
 fun CubcSuccessScreen(
+    resultDetail: CubcSuccessResultDetail,
     goNewTransfer: () -> Unit,
-    goAccount: () -> Unit
+    goAccount: () -> Unit,
 ) {
-    TreeBg {
-        Column(Modifier.fillMaxSize()) {
-            Text(
-                stringResource(id = R.string.transfer_result),
-                color = colorResource(R.color.white)
+
+    val transactionDetailItems = listOf(
+        TransactionDetailItem("Transfer Amount", resultDetail.transferAmount),
+        TransactionDetailItem("Transfer To", "CUBC"),
+        TransactionDetailItem("Beneficiary Account Number", resultDetail.toAccount),
+        TransactionDetailItem("From Account", resultDetail.fromAccount),
+        TransactionDetailItem("Transfer Date", resultDetail.transferDate),
+    )
+
+    BasicBg {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            TopAppBar(
+                title = { TopBarTitleText(text = "Confirmation") },
+                backgroundColor = MaterialTheme.colors.background,
+                elevation = 12.dp
             )
 
-            TitleText("Success")
-            Spacer(Modifier.weight(1.0f))
+            Spacer(Modifier.height(12.dp))
+            Image(
+                painter = painterResource(R.drawable.ic_result_success),
+                contentDescription = "Success"
+            )
+            TitleText(text = "Succeed", Modifier)
 
-            Spacer(modifier = Modifier.weight(1.0f))
+            TransactionDetail(transactionDetailItems)
 
-            Button(onClick = goNewTransfer) {
-                Text("New Transfer")
-            }
-            Button(onClick = goAccount) {
-                Text("Go Account")
+            Spacer(Modifier.weight(1f))
+
+            BottomButtonArea {
+                Button(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(42.dp),
+                    onClick = { goNewTransfer() }
+                ) {
+                    Text("New Transfer")
+                }
+
+                Spacer(Modifier.height(12.dp))
+
+                OutlinedButton(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(42.dp),
+                    onClick = { goAccount() }
+                ) {
+                    Text("Home")
+                }
             }
         }
     }
@@ -45,5 +90,18 @@ fun CubcSuccessScreen(
 @Preview(name = "phone", device = "spec:shape=Normal,width=375,height=790,unit=dp,dpi=480")
 @Composable
 private fun PreviewScreen() {
-    CubcSuccessScreen({}, {})
+    val resultDetail = CubcSuccessResultDetail(
+         "$10,000.0",
+         "12345000004079",
+         "USD 1079-4423-770169 USD Acc 1",
+         "01/12/2021 (Immediate)",
+    )
+
+    CubcAppTheme() {
+        CubcSuccessScreen(
+            resultDetail,
+            {},
+            {},
+        )
+    }
 }
