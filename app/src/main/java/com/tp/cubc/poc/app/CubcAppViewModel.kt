@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tp.cubc.poc.MainApplication
 import com.tp.cubc.poc.TAG
 import com.tp.cubc.poc.landing.repository.LandingRemoteDataSource
 import com.tp.cubc.poc.landing.repository.dataModel.AccessTokenResponse
@@ -42,6 +43,6 @@ class CubcAppViewModel @Inject constructor(
     
     suspend fun requireAccessToken() {
         val result: Result<AccessTokenResponse> = landingRemoteDataSource.accessToken()
-        Log.d(tag, " Access token after API: ${result.getOrNull()}")
+        MainApplication.instance.cubcAppData.token = result.getOrNull()?.accessToken
     }
 }

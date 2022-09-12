@@ -1,6 +1,8 @@
 package com.tp.cubc.poc.landing.repository
 
+import com.mbanking.cubc.login.repository.dataModel.LoginRequestBody
 import com.tp.cubc.poc.landing.repository.dataModel.AccessTokenResponse
+import com.tp.cubc.poc.landing.repository.dataModel.LoginResponseBodyResult
 import com.tp.cubc.poc.util.http.HttpRequestBody
 import com.tp.cubc.poc.util.http.HttpResponseBody
 import retrofit2.Response
@@ -38,11 +40,11 @@ interface LandingApi {
 //        @Body apiRequest: ApiRequest
 //    ): Response<HttpResponseBody<QuerySystemContentResponse>>
 //
-//    // 登入
-//    @POST("api/auth/login")
-//    suspend fun login(
-//        @Body loginRequest: LoginRequest
-//    ): Response<HttpResponseBody<LoginResponse>>
+    // 登入
+    @POST("api/auth/login")
+    suspend fun login(
+        @Body loginRequest: LoginRequestBody
+    ): Response<HttpResponseBody<LoginResponseBodyResult>>
 //
 //    // 查詢客戶資訊
 //    @POST("api/person/queryCustInfo")

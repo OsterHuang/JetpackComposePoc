@@ -1,6 +1,7 @@
 package com.tp.cubc.poc.app
 
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -8,6 +9,7 @@ import com.tp.cubc.poc.example.ComponentSampleScreen
 import com.tp.cubc.poc.home.homeGraph
 import com.tp.cubc.poc.landing.LandingRoutes
 import com.tp.cubc.poc.landing.LoginScreen
+import com.tp.cubc.poc.landing.LoginViewModel
 import com.tp.cubc.poc.landing.SplashScreen
 import com.tp.cubc.poc.landing.applyMobileBank.ApplyMobileBankEntryScreen
 import com.tp.cubc.poc.landing.register.registerGraph
@@ -53,7 +55,9 @@ fun CubcAppNavHost(navHostController: NavHostController) {
             SplashScreen() { nextToLogin() }
         }
         composable(LandingRoutes.Login.name) {
+            val loginViewModel: LoginViewModel = hiltViewModel() //　只有此畫面使用viewModel沒有流程
             LoginScreen(
+                loginViewModel,
                 goRegister = {
                     goRegister()
                 },

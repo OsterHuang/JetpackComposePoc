@@ -12,7 +12,7 @@
     <string name="register_terms">Register Terms</string>
     <string name="register_ocr">Register OCR</string>
     <string name="register_personal">Register Personal</string>
-    <string name="go_register">Go Register</string>
+    <string name="go_register">Open a digital account</string>
 
     <!-- Apply mobile bank -->
     <string name="apply_mobile_bank">Apply Mobile Bank</string>
