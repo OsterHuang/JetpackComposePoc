@@ -17,18 +17,27 @@ enum class HomeRoutes() {
 class HomeIndexRouter (navController: NavController) {
     val goHome = {
         navController.popBackStack()
-        navController.navigate(HomeRoutes.Home.name)
+        navController.navigate(HomeRoutes.Home.name) {
+            launchSingleTop = true
+        }
     }
     val goAccount = {
         navController.popBackStack()
-        navController.navigate(HomeRoutes.Account.name) }
+        navController.navigate(HomeRoutes.Account.name) {
+            launchSingleTop = true
+        }
+    }
     val goLocation = {
         navController.popBackStack()
-        navController.navigate(HomeRoutes.Location.name)
+        navController.navigate(HomeRoutes.Location.name) {
+            launchSingleTop = true
+        }
     }
     val goOther = {
         navController.popBackStack()
-        navController.navigate(HomeRoutes.Other.name)
+        navController.navigate(HomeRoutes.Other.name) {
+            launchSingleTop = true
+        }
     }
 }
 
