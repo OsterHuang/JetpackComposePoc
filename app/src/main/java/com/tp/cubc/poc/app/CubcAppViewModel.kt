@@ -6,13 +6,20 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tp.cubc.poc.TAG
+import com.tp.cubc.poc.landing.repository.LandingRemoteDataSource
+import com.tp.cubc.poc.landing.repository.dataModel.AccessTokenResponse
 import com.tp.cubc.poc.util.constant.CubcConstant.Companion.LOADING_PENDING_TIMEOUT
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CubcAppViewModel: ViewModel() {
+@HiltViewModel
+class CubcAppViewModel @Inject constructor(
+    private val landingRemoteDataSource: LandingRemoteDataSource
+): ViewModel() {
     private val tag = TAG
 
     val isDarkModeState = mutableStateOf(false)
@@ -31,5 +38,10 @@ class CubcAppViewModel: ViewModel() {
                     loading.value = 0
                 }
         }
+    }
+    
+    suspend fun requireAccessToken() {
+        val result: Result<AccessTokenResponse> = landingRemoteDataSource.accessToken()
+        Log.d(tag, " Access token after API: ${result.getOrNull()}")
     }
 }

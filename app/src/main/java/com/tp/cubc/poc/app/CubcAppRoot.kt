@@ -19,11 +19,19 @@ import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.tp.cubc.poc.ui.theme.CubcAppTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun CubcApp() {
     val navHostController = rememberNavController()
     val appViewModel: CubcAppViewModel = viewModel(LocalContext.current as ComponentActivity)
+
+    val coroutineScope = rememberCoroutineScope()
+    LaunchedEffect(true) { // Set true to execute on first recompositio
+        coroutineScope.launch {
+            appViewModel.requireAccessToken()
+        }
+    }
 
     CubcAppTheme(appViewModel.isDarkModeState.value) {
         Surface(
