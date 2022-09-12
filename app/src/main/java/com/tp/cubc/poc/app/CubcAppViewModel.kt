@@ -11,12 +11,13 @@ import com.tp.cubc.poc.landing.repository.LandingRemoteDataSource
 import com.tp.cubc.poc.landing.repository.dataModel.AccessTokenResponse
 import com.tp.cubc.poc.util.constant.CubcConstant.Companion.LOADING_PENDING_TIMEOUT
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@FlowPreview
 @HiltViewModel
 class CubcAppViewModel @Inject constructor(
     private val landingRemoteDataSource: LandingRemoteDataSource
@@ -24,7 +25,7 @@ class CubcAppViewModel @Inject constructor(
     private val tag = TAG
 
     val isDarkModeState = mutableStateOf(false)
-    val loading = mutableStateOf<Int>(0)
+    val loading = mutableStateOf(0)
 
     init {
         viewModelScope.launch {
