@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.tp.cubc.poc.R
@@ -45,9 +46,9 @@ fun TransferTypeOtherBankType(
                     transferMainViewModel.transferType.value = TransferType.Bakong
                     goOtherBakong()
                 },
-                Modifier.padding(4.dp, 8.dp)
+                Modifier.padding(4.dp, 8.dp).fillMaxWidth()
             ) {
-                Text(stringResource(id = R.string.bakong))
+                Text(stringResource(id = R.string.bakong), textAlign = TextAlign.Left, modifier = Modifier.fillMaxWidth())
             }
         }
 
@@ -59,24 +60,23 @@ fun TransferTypeOtherBankType(
                     transferMainViewModel.transferType.value = TransferType.Fast
                     goOtherLocalFast()
                 },
-                Modifier.padding(4.dp, 8.dp)
+                Modifier.padding(4.dp, 8.dp).fillMaxWidth()
             ) {
-                Text(stringResource(id = R.string.fast_transfer))
+                Text(stringResource(id = R.string.fast_transfer), textAlign = TextAlign.Left, modifier = Modifier.fillMaxWidth())
             }
         }
 
         if (isFast && isLocal) Divider()
 
         if (isLocal) {
-            Divider()
             TextButton(
                 onClick = {
                     transferMainViewModel.transferType.value = TransferType.Local
                     goOtherLocalFast()
                 },
-                Modifier.padding(4.dp, 8.dp)
+                Modifier.padding(4.dp, 8.dp).fillMaxWidth()
             ) {
-                Text(stringResource(id = R.string.local_bank_transfer))
+                Text(stringResource(id = R.string.local_bank_transfer), textAlign = TextAlign.Left, modifier = Modifier.fillMaxWidth())
             }
         }
     }

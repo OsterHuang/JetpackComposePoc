@@ -2,14 +2,18 @@ package com.tp.cubc.poc.transfer.typedialog
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -25,6 +29,8 @@ fun TransferTypeLevel1(
     goOtherBank: () -> Unit,
     goBakongWallet: () -> Unit,
 ) {
+    val textButtonModifier = Modifier.padding(4.dp, 8.dp).fillMaxWidth()
+
     Column(
         modifier = Modifier
             .padding(8.dp, 15.dp)
@@ -38,23 +44,38 @@ fun TransferTypeLevel1(
                 transferMainViewModel.transferType.value = TransferType.Cubc
                 goCubc()
             },
-            Modifier.padding(4.dp, 8.dp)
+            textButtonModifier,
         ) {
-            Text(stringResource(id = R.string.cubc))
+            Text(
+                stringResource(id = R.string.cubc),
+                textAlign = TextAlign.Left,
+                modifier = Modifier.fillMaxWidth()
+            )
         }
         Divider()
         TextButton(
             onClick = goOtherBank,
-            Modifier.padding(4.dp, 8.dp)
+            textButtonModifier
         ) {
-            Text(stringResource(id = R.string.other_bank_and_wallet))
+            Text(
+                stringResource(id = R.string.other_bank_and_wallet),
+                textAlign = TextAlign.Left,
+                modifier = Modifier.fillMaxWidth()
+            )
         }
         Divider()
         TextButton(
-            onClick = goBakongWallet,
-            Modifier.padding(4.dp, 8.dp)
+            onClick = {
+                transferMainViewModel.transferType.value = TransferType.Bakong
+                goBakongWallet()
+            },
+            textButtonModifier
         ) {
-            Text(stringResource(id = R.string.bakong_wallet))
+            Text(
+                stringResource(id = R.string.bakong_wallet),
+                textAlign = TextAlign.Left,
+                modifier = Modifier.fillMaxWidth()
+            )
         }
     }
 }

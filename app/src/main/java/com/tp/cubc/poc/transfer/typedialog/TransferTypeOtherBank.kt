@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
@@ -58,9 +59,9 @@ fun TransferTypeOtherBank(
                                 transferMainViewModel.transferToBank.value = otherBank
                                 goOtherBankType()
                             },
-                            Modifier.padding(4.dp, 4.dp)
+                            Modifier.padding(4.dp, 8.dp).fillMaxWidth()
                         ) {
-                            Text(otherBank.name)
+                            Text(otherBank.name, textAlign = TextAlign.Left, modifier = Modifier.fillMaxWidth())
                         }
                         Divider()
                     }

@@ -60,7 +60,7 @@ fun BakongWalletInputScreen(
                 OutlinedTextField(
                     value = "",
                     label = { Text("Bakong Account") },
-                    leadingIcon = { Text("+855") },
+                    leadingIcon = { Text("+855", Modifier.padding(12.dp, 0.dp, 2.dp, 0.dp)) },
                     modifier = Modifier.fillMaxWidth(),
                     onValueChange = {}
                 )
