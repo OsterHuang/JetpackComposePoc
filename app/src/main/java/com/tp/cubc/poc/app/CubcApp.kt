@@ -36,7 +36,7 @@ fun CubcApp() {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(Color(0x44000000)),
+                        .background(Color(0x22000000)),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {

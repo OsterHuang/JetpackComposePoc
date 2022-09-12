@@ -30,6 +30,21 @@ fun TransferMainScreen(
     transferMainViewModel: TransferMainViewModel,
     transferTypeRouter: TransferTypeRouter,
 ) {
+    val appViewModel: CubcAppViewModel = viewModel(LocalContext.current as ComponentActivity)
+
+    val coroutineScope = rememberCoroutineScope()
+    LaunchedEffect(transferMainViewModel.toString()) { // Set true to execute on first recompositio
+        coroutineScope.launch {
+            appViewModel.loading.value++
+            transferMainViewModel.queryAccountList()
+            appViewModel.loading.value--
+        }
+
+        transferMainViewModel.transferToBank.value = null
+        transferMainViewModel.transferType.value = null
+
+    }
+
     BasicBg {
         Column(
             modifier = Modifier.fillMaxSize(),

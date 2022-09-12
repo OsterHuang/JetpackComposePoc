@@ -30,13 +30,6 @@ fun LocalFastInputScreen(
     transferMainViewModel: TransferMainViewModel,
     goConfirm: () -> Unit,
 ) {
-    val coroutineScope = rememberCoroutineScope()
-    LaunchedEffect(true) { // Set true to execute on first recompositio
-        coroutineScope.launch {
-            transferMainViewModel.queryAccountList()
-        }
-    }
-
     BasicBg {
         Column(
             modifier = Modifier.fillMaxSize(),

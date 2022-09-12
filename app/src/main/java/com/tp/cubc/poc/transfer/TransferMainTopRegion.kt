@@ -34,17 +34,6 @@ fun TransferMainTopRegion(
     transferMainViewModel: TransferMainViewModel,
     transferTypeRouter: TransferTypeRouter? = null, // 只有TransferMain需要開啟轉帳類型Dialog
 ) {
-    val appViewModel: CubcAppViewModel = viewModel(LocalContext.current as ComponentActivity)
-
-    val coroutineScope = rememberCoroutineScope()
-    LaunchedEffect(transferMainViewModel.toString()) { // Set true to execute on first recompositio
-        coroutineScope.launch {
-            appViewModel.loading.value++
-            transferMainViewModel.queryAccountList()
-            appViewModel.loading.value--
-        }
-    }
-
     // Computed Values
     val txtTransferTo = transferMainViewModel.transferToBank.value?.name ?:
         transferMainViewModel.transferType.value?.name ?: ""
