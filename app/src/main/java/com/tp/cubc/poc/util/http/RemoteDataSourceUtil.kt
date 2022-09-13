@@ -6,9 +6,9 @@ import kotlinx.coroutines.withContext
 import retrofit2.Response
 
 object RemoteDataSourceUtil {
-    suspend fun <RES>wrapHttpResponse(
-        block: suspend () -> Response<HttpResponseBody<RES>>,
-    ): Result<RES> {
+    suspend fun <RES_BODY_RESULT>wrapHttpResponse(
+        block: suspend () -> Response<HttpResponseBody<RES_BODY_RESULT>>,
+    ): Result<RES_BODY_RESULT> {
         return withContext(Dispatchers.IO) {
             try {
                 val response = block.invoke()
