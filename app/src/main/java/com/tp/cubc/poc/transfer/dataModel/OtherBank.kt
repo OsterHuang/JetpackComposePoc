@@ -1,4 +1,4 @@
-package com.tp.cubc.poc.transfer.model
+package com.tp.cubc.poc.transfer.dataModel
 
 class OtherBank(
     val name: String,

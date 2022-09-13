@@ -1,4 +1,4 @@
-package com.tp.cubc.poc.transfer.model.favorite
+package com.tp.cubc.poc.transfer.dataModel.favorite
 
 abstract class TransferFavoriteItem(val toAccount: String, val toAccountName: String) {
 }

@@ -4,7 +4,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.dialog
@@ -12,7 +11,6 @@ import androidx.navigation.compose.navigation
 import com.tp.cubc.poc.transfer.TransferMainViewModel
 import com.tp.cubc.poc.transfer.TransferRoutes
 import com.tp.cubc.poc.transfer.TransferTypeRouter
-import com.tp.cubc.poc.transfer.model.OtherBank
 
 enum class TransferTypeRoutes {
     TransferTypeIndex,

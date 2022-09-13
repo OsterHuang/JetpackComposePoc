@@ -10,8 +10,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.tp.cubc.poc.transfer.TransferMainTopRegion
 import com.tp.cubc.poc.transfer.TransferMainViewModel
-import com.tp.cubc.poc.transfer.model.BankAccount
-import com.tp.cubc.poc.transfer.model.TransferType
+import com.tp.cubc.poc.transfer.dataModel.BankAccount
+import com.tp.cubc.poc.transfer.dataModel.TransferType
 import com.tp.cubc.poc.ui.bg.BasicBg
 import com.tp.cubc.poc.ui.component.BottomButtonArea
 import com.tp.cubc.poc.ui.component.RoundedBorderColumn
@@ -19,7 +19,6 @@ import com.tp.cubc.poc.ui.component.TopBarTitleText
 import com.tp.cubc.poc.ui.component.dropdown.DropdownField
 import com.tp.cubc.poc.ui.theme.CubcAppTheme
 import com.tp.cubc.poc.util.constant.CubcCurrency
-import kotlinx.coroutines.launch
 import java.math.BigDecimal
 
 @Composable

@@ -1,8 +1,9 @@
-package com.tp.cubc.poc.transfer.model.favorite
+package com.tp.cubc.poc.transfer.dataModel.favorite
 
-class BakongWalletFavoriteItem(
+class OtherBankFavoriteItem(
     toAccount: String,
     toAccountName: String,
+    bankCode: String
 ) : TransferFavoriteItem(
     toAccount,
     toAccountName

@@ -19,7 +19,7 @@ import javax.inject.Singleton
 object RetrofitManager {
     val tag = TAG
 
-    private var URL = "ht" + "tp://" + "192.168.31.191:3000/"
+    private var URL = "ht" + "tp://" + "192.168.20.118:3000/"
     private const val URL_STG = "ht" + "tps://" + "mbkhut.cathaybkdev.com.tw/cubcapi/"
     private const val URL_UAT = "ht" + "tps://" + "mbkhuat.cathaybkdev.com.tw/cubcapi/"
     private const val URL_PRODUCTION = "ht" + "tp://" + "192.168.20.80:7080/"

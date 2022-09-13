@@ -3,7 +3,7 @@ package com.tp.cubc.poc.transfer.bakongwallet
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.tp.cubc.poc.transfer.model.BankAccount
+import com.tp.cubc.poc.transfer.dataModel.BankAccount
 import java.math.BigDecimal
 
 class BakongWalletViewModel: ViewModel() {

@@ -1,4 +1,4 @@
-package com.tp.cubc.poc.transfer.model
+package com.tp.cubc.poc.transfer.dataModel
 
 import com.tp.cubc.poc.ui.component.dropdown.DropdownItemSelectable
 

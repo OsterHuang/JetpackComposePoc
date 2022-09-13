@@ -16,8 +16,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.tp.cubc.poc.R
 import com.tp.cubc.poc.transfer.TransferMainViewModel
-import com.tp.cubc.poc.transfer.model.OtherBank
-import com.tp.cubc.poc.transfer.model.TransferType
+import com.tp.cubc.poc.transfer.dataModel.OtherBank
+import com.tp.cubc.poc.transfer.dataModel.TransferType
 
 @Composable
 fun TransferTypeOtherBankType(

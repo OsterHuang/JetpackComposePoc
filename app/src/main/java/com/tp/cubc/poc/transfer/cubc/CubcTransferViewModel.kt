@@ -5,9 +5,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
-import com.tp.cubc.poc.transfer.model.BankAccount
-import com.tp.cubc.poc.transfer.model.TransferPurpose
+import com.tp.cubc.poc.transfer.dataModel.TransferPurpose
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.math.BigDecimal
 import java.util.*

@@ -1,31 +1,22 @@
 package com.tp.cubc.poc.transfer.cubc
 
 import android.app.Application
-import androidx.activity.ComponentActivity
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tp.cubc.poc.R
-import com.tp.cubc.poc.app.CubcAppViewModel
 import com.tp.cubc.poc.transfer.TransferMainTopRegion
 import com.tp.cubc.poc.transfer.TransferMainViewModel
-import com.tp.cubc.poc.transfer.model.BankAccount
-import com.tp.cubc.poc.transfer.model.TransferPurpose
-import com.tp.cubc.poc.transfer.model.TransferType
+import com.tp.cubc.poc.transfer.dataModel.BankAccount
+import com.tp.cubc.poc.transfer.dataModel.TransferPurpose
+import com.tp.cubc.poc.transfer.dataModel.TransferType
 import com.tp.cubc.poc.ui.bg.BasicBg
 import com.tp.cubc.poc.ui.component.BottomButtonArea
 import com.tp.cubc.poc.ui.component.ErrorMessage
@@ -35,7 +26,6 @@ import com.tp.cubc.poc.ui.component.dropdown.DropdownField
 import com.tp.cubc.poc.ui.theme.CubcAppTheme
 import com.tp.cubc.poc.ui.theme.Green500
 import com.tp.cubc.poc.util.constant.CubcCurrency
-import kotlinx.coroutines.launch
 import java.math.BigDecimal
 import java.text.SimpleDateFormat
 
