@@ -8,6 +8,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.mbanking.cubc.myAccount.repository.dataModel.MyBankAccount
+import com.mbanking.cubc.myAccount.repository.dataModel.QueryAccountInfoResponseBodyResult
+import com.tp.cubc.poc.account.repository.AccountApi
+import com.tp.cubc.poc.account.repository.AccountRemoteDataSource
 import com.tp.cubc.poc.transfer.TransferMainViewModel
 import com.tp.cubc.poc.transfer.dataModel.BankAccount
 import com.tp.cubc.poc.transfer.dataModel.TransferType
@@ -17,6 +21,9 @@ import com.tp.cubc.poc.ui.component.dropdown.DropdownField
 import com.tp.cubc.poc.ui.component.dropdown.DropdownItemSelectable
 import com.tp.cubc.poc.ui.theme.CubcAppTheme
 import com.tp.cubc.poc.util.constant.CubcCurrency
+import com.tp.cubc.poc.util.http.HttpRequestBody
+import com.tp.cubc.poc.util.http.HttpResponseBody
+import retrofit2.Response
 import java.math.BigDecimal
 import java.text.SimpleDateFormat
 
@@ -30,9 +37,9 @@ fun CubcConfirmScreen(
 ) {
     // -- private fun --
     val clickToSuccessPage = fun() {
-        val computedAmount = "${transferMainViewModel.fromAccount.value?.currency?.symbol}${cubcTransferViewModel.transferAmount.value}"
+        val computedAmount = "${transferMainViewModel.fromAccount.value?.getCurrency()?.symbol}${cubcTransferViewModel.transferAmount.value}"
         val computedFromAccount = transferMainViewModel.fromAccount.value?.run {
-            "${currency.name} $accountNo $nickname "
+            "${getCurrency().name} $account $nickname "
         } ?: "---"
         val computedTransferDate = cubcTransferViewModel.transferDate.value.run {
             SimpleDateFormat("yyyy/MM/dd").format(this) + " (Immediate)"
@@ -46,10 +53,8 @@ fun CubcConfirmScreen(
     }
 
     // -- Display Computed --
-    val computedAmount = "${transferMainViewModel.fromAccount.value?.currency?.symbol}${cubcTransferViewModel.transferAmount.value}"
-    val computedFromAccount = transferMainViewModel.fromAccount.value?.run {
-        "${currency.name} $accountNo $nickname "
-    } ?: "---"
+    val computedAmount = "${transferMainViewModel.fromAccount.value?.getCurrency()?.symbol}${cubcTransferViewModel.transferAmount.value}"
+    val computedFromAccount = transferMainViewModel.fromAccount.value?.run { formattedBalance } ?: "---"
     val computedTransferDate = cubcTransferViewModel.transferDate.value.run {
         SimpleDateFormat("yyyy/MM/dd").format(this) + " (Immediate)"
     }
@@ -114,8 +119,26 @@ fun CubcConfirmScreen(
 @Preview(name = "phone", device = "spec:shape=Normal,width=375,height=790,unit=dp,dpi=480")
 @Composable
 private fun PreviewCubcConfirmScreen() {
-    val transferMainViewModel = TransferMainViewModel(Application()).apply {
-        fromAccount.value = BankAccount("1072-6644017", "Acc Nickname", BigDecimal("2174.63"), CubcCurrency.USD)
+    val transferMainViewModel = TransferMainViewModel(
+        Application(),
+        AccountRemoteDataSource(
+            object: AccountApi {
+                override suspend fun queryAccountInfo(requestBody: HttpRequestBody): Response<HttpResponseBody<QueryAccountInfoResponseBodyResult>> {
+                    return Response.success(HttpResponseBody(
+                        "0000",
+                        "Success",
+                        QueryAccountInfoResponseBodyResult(listOf(), listOf(), listOf(), listOf())
+                    ))
+                }
+            })
+    ).apply {
+        fromAccount.value = MyBankAccount(
+            branchCode = "南京復興",
+            account = "01110110300273",
+            curr = CubcCurrency.USD.name,
+            balance = BigDecimal("2174.63"),
+            nickname = "南京復興 Digit USD"
+        )
         transferType.value = TransferType.Cubc
     }
     val cubcTransferViewModel = CubcTransferViewModel(Application()).apply {

@@ -16,15 +16,23 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
+import com.mbanking.cubc.myAccount.repository.dataModel.QueryAccountInfoResponseBodyResult
+import com.tp.cubc.poc.account.repository.AccountApi
+import com.tp.cubc.poc.account.repository.AccountRemoteDataSource
 import com.tp.cubc.poc.app.CubcAppViewModel
 import com.tp.cubc.poc.ui.bg.BasicBg
 import com.tp.cubc.poc.ui.component.BottomButtonArea
 import com.tp.cubc.poc.ui.component.RoundedBorderColumn
 import com.tp.cubc.poc.ui.component.TopBarTitleText
 import com.tp.cubc.poc.ui.theme.CubcAppTheme
+import com.tp.cubc.poc.util.http.HttpRequestBody
+import com.tp.cubc.poc.util.http.HttpResponseBody
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.launch
+import retrofit2.Response
 
 
+@OptIn(FlowPreview::class)
 @Composable
 fun TransferMainScreen(
     transferMainViewModel: TransferMainViewModel,
@@ -79,13 +87,23 @@ fun TransferMainScreen(
     }
 }
 
-
 //@Preview(name = "phone", device = "spec:shape=Normal,width=375,height=790,unit=dp,dpi=480")
 @Preview
 @Composable
 private fun PreviewScreen() {
     val navController = rememberNavController()
-    val transferMainViewModel = TransferMainViewModel(Application())
+    val transferMainViewModel = TransferMainViewModel(
+        Application(),
+        AccountRemoteDataSource(object: AccountApi {
+            override suspend fun queryAccountInfo(requestBody: HttpRequestBody): Response<HttpResponseBody<QueryAccountInfoResponseBodyResult>> {
+                return Response.success(HttpResponseBody(
+                    "0000",
+                    "Success",
+                    QueryAccountInfoResponseBodyResult(listOf(), listOf(), listOf(), listOf())
+                ))
+            }
+        })
+    )
     CubcAppTheme() {
         TransferMainScreen(
             transferMainViewModel,

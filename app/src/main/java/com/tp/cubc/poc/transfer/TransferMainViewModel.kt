@@ -3,6 +3,8 @@ package com.tp.cubc.poc.transfer
 import android.app.Application
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
+import com.mbanking.cubc.myAccount.repository.dataModel.MyBankAccount
+import com.tp.cubc.poc.account.repository.AccountRemoteDataSource
 import com.tp.cubc.poc.transfer.dataModel.BankAccount
 import com.tp.cubc.poc.transfer.dataModel.OtherBank
 import com.tp.cubc.poc.transfer.dataModel.TransferType
@@ -15,26 +17,25 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TransferMainViewModel @Inject constructor(
-    app: Application
+    app: Application,
+    val accountRemoteDataSource: AccountRemoteDataSource
 ): AndroidViewModel(app) {
-    val accountList = mutableStateOf<List<BankAccount>>(listOf())
-    val fromAccount = mutableStateOf<BankAccount?>(null)
+    val accountList = mutableStateOf<List<MyBankAccount>>(listOf())
+    val fromAccount = mutableStateOf<MyBankAccount?>(null)
     val transferToBank = mutableStateOf<OtherBank?>(null)
     val transferType = mutableStateOf<TransferType?>(null)
     val transferFavoriteItem = mutableStateOf<TransferFavoriteItem?>(null)
 
     suspend fun queryAccountList() {
+        val result = accountRemoteDataSource.queryAccountInfo()
 
-        delay(1200)
-        accountList.value = listOf(
-            BankAccount("10031745", "My HKR 1", BigDecimal("200074"), CubcCurrency.KHR),
-            BankAccount("10035771", "My HKR 2", BigDecimal("5568"), CubcCurrency.KHR),
-            BankAccount("800031552", "MY USD 1", BigDecimal("3111.75"), CubcCurrency.USD),
-        )
+        accountList.value = result.getOrNull()?.run {
+            currentList + digitalList + savingsList
+        } ?: listOf()
+
         if (accountList.value.isNotEmpty()) {
             fromAccount.value = accountList.value[0]
         }
-
     }
 }
 

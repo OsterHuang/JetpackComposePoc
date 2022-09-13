@@ -4,7 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import com.tp.cubc.poc.home.account.myAccountGraph
+import com.tp.cubc.poc.account.myAccountGraph
 import com.tp.cubc.poc.landing.LandingRoutes
 
 enum class HomeRoutes() {

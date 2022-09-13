@@ -1,4 +1,4 @@
-package com.tp.cubc.poc.home.account
+package com.tp.cubc.poc.account
 
 import androidx.compose.material.Button
 import androidx.compose.material.Text

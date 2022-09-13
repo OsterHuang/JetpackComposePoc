@@ -21,12 +21,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
+import com.mbanking.cubc.myAccount.repository.dataModel.QueryAccountInfoResponseBodyResult
+import com.tp.cubc.poc.account.repository.AccountApi
+import com.tp.cubc.poc.account.repository.AccountRemoteDataSource
 import com.tp.cubc.poc.app.CubcAppViewModel
 import com.tp.cubc.poc.ui.component.RoundedBorderColumn
 import com.tp.cubc.poc.ui.component.dropdown.DropdownField
 import com.tp.cubc.poc.ui.theme.CubcAppTheme
+import com.tp.cubc.poc.util.http.HttpRequestBody
+import com.tp.cubc.poc.util.http.HttpResponseBody
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import retrofit2.Response
 
 
 @Composable
@@ -53,7 +59,7 @@ fun TransferMainTopRegion(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentWidth(Alignment.End),
-            text = "Balance: ${currency.symbol}${balance}",
+            text = "Balance: ${getCurrency().symbol}${balance}",
             fontSize = 12.sp
         )
     }
@@ -104,7 +110,18 @@ fun TransferMainTopRegion(
 @Composable
 private fun PreviewScreen() {
     val navController = rememberNavController()
-    val transferMainViewModel = TransferMainViewModel(Application())
+    val transferMainViewModel = TransferMainViewModel(
+        Application(),
+        AccountRemoteDataSource(object: AccountApi {
+            override suspend fun queryAccountInfo(requestBody: HttpRequestBody): Response<HttpResponseBody<QueryAccountInfoResponseBodyResult>> {
+                return Response.success(HttpResponseBody(
+                    "0000",
+                    "Success",
+                    QueryAccountInfoResponseBodyResult(listOf(), listOf(), listOf(), listOf())
+                ))
+            }
+        })
+    )
     CubcAppTheme() {
         RoundedBorderColumn {
             TransferMainTopRegion(

@@ -10,6 +10,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.mbanking.cubc.myAccount.repository.dataModel.MyBankAccount
+import com.mbanking.cubc.myAccount.repository.dataModel.QueryAccountInfoResponseBodyResult
+import com.tp.cubc.poc.account.repository.AccountApi
+import com.tp.cubc.poc.account.repository.AccountRemoteDataSource
 import com.tp.cubc.poc.transfer.TransferMainTopRegion
 import com.tp.cubc.poc.transfer.TransferMainViewModel
 import com.tp.cubc.poc.transfer.dataModel.BankAccount
@@ -20,6 +24,9 @@ import com.tp.cubc.poc.ui.component.RoundedBorderColumn
 import com.tp.cubc.poc.ui.component.TopBarTitleText
 import com.tp.cubc.poc.ui.theme.CubcAppTheme
 import com.tp.cubc.poc.util.constant.CubcCurrency
+import com.tp.cubc.poc.util.http.HttpRequestBody
+import com.tp.cubc.poc.util.http.HttpResponseBody
+import retrofit2.Response
 import java.math.BigDecimal
 
 @Composable
@@ -100,8 +107,26 @@ fun LocalFastInputScreen(
 @Preview(name = "phone", device = "spec:shape=Normal,width=375,height=790,unit=dp,dpi=480")
 @Composable
 private fun PreviewLocalFastInputScreen() {
-    val transferMainViewModel = TransferMainViewModel(Application()).apply {
-        fromAccount.value = BankAccount("1072-6644017", "From Acc1", BigDecimal("2174.63"), CubcCurrency.USD)
+    val transferMainViewModel = TransferMainViewModel(
+        Application(),
+        AccountRemoteDataSource(
+            object: AccountApi {
+                override suspend fun queryAccountInfo(requestBody: HttpRequestBody): Response<HttpResponseBody<QueryAccountInfoResponseBodyResult>> {
+                    return Response.success(HttpResponseBody(
+                        "0000",
+                        "Success",
+                        QueryAccountInfoResponseBodyResult(listOf(), listOf(), listOf(), listOf())
+                    ))
+                }
+            })
+    ).apply {
+        fromAccount.value = MyBankAccount(
+            branchCode = "南京復興",
+            account = "01110110300273",
+            curr = CubcCurrency.USD.name,
+            balance = BigDecimal("2174.63"),
+            nickname = "南京復興 Digit USD"
+        )
         transferType.value = TransferType.Cubc
     }
 

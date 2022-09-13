@@ -1,4 +1,4 @@
-package com.tp.cubc.poc.home.account
+package com.tp.cubc.poc.account
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder

@@ -2,6 +2,7 @@ package com.tp.cubc.poc.util.http
 
 import com.tp.cubc.poc.BuildConfig
 import com.tp.cubc.poc.TAG
+import com.tp.cubc.poc.account.repository.AccountApi
 import com.tp.cubc.poc.landing.repository.LandingApi
 import dagger.Module
 import dagger.Provides
@@ -51,6 +52,7 @@ object RetrofitManager {
                     .connectTimeout(60, TimeUnit.SECONDS)
                     .writeTimeout(60, TimeUnit.SECONDS)
                     .readTimeout(60, TimeUnit.SECONDS)
+                    .addInterceptor(HttpHeaderInterceptor())
                     .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                     .build()
             )
@@ -61,5 +63,9 @@ object RetrofitManager {
     @Singleton
     @Provides
     fun provideLoginApi(retrofit: Retrofit): LandingApi = retrofit.create(LandingApi::class.java)
+
+    @Singleton
+    @Provides
+    fun provideAccountApi(retrofit: Retrofit): AccountApi = retrofit.create(AccountApi::class.java)
 
 }
