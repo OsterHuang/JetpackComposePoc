@@ -1,7 +1,12 @@
 package com.tp.cubc.poc.app
 
 import androidx.activity.ComponentActivity
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -40,11 +45,16 @@ fun CubcApp() {
         ) {
             CubcAppNavHost(navHostController = navHostController)
 
-            if (appViewModel.loading.value > 0) {
+            AnimatedVisibility(
+                visible = appViewModel.loading.value > 0,
+                enter = fadeIn(),
+                exit = fadeOut(animationSpec = tween(500))
+            ) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(Color(0x22000000)),
+                        .background(Color(0x44000000))
+                        .clickable(enabled = false, onClick = {}),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
