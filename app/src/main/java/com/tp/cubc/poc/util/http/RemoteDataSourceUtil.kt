@@ -6,15 +6,18 @@ import kotlinx.coroutines.withContext
 import retrofit2.Response
 
 object RemoteDataSourceUtil {
+    /**
+     * 呼叫API並且將Response轉換成Result
+     */
     suspend fun <RES_BODY_RESULT>wrapHttpResponse(
         block: suspend () -> Response<HttpResponseBody<RES_BODY_RESULT>>,
     ): Result<RES_BODY_RESULT> {
         return withContext(Dispatchers.IO) {
             try {
                 val response = block.invoke()
-                if (response.isSuccessful && response.body()?.msgCode == ApiReturnCode.Success.code) {
+                if (response.isSuccessful && response.body() != null && response.body()?.msgCode == ApiReturnCode.Success.code) {
                     Result.success(
-                        response.body()?.result ?: throw NullPointerException()
+                        response.body()!!.result
                     )
                 } else {
                     if (response.body() != null) {
