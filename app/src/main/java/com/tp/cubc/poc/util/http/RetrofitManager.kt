@@ -4,6 +4,7 @@ import com.tp.cubc.poc.BuildConfig
 import com.tp.cubc.poc.TAG
 import com.tp.cubc.poc.account.repository.AccountApi
 import com.tp.cubc.poc.landing.repository.LandingApi
+import com.tp.cubc.poc.util.constant.CubcConstant.Companion.LOADING_PENDING_TIMEOUT
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -49,9 +50,9 @@ object RetrofitManager {
             .addConverterFactory(GsonConverterFactory.create())
             .client(
                 OkHttpClient.Builder()
-                    .connectTimeout(60, TimeUnit.SECONDS)
-                    .writeTimeout(60, TimeUnit.SECONDS)
-                    .readTimeout(60, TimeUnit.SECONDS)
+                    .connectTimeout(LOADING_PENDING_TIMEOUT, TimeUnit.MICROSECONDS)
+                    .writeTimeout(LOADING_PENDING_TIMEOUT, TimeUnit.MICROSECONDS)
+                    .readTimeout(LOADING_PENDING_TIMEOUT, TimeUnit.MICROSECONDS)
                     .addInterceptor(HttpHeaderInterceptor())
                     .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                     .build()
@@ -62,7 +63,7 @@ object RetrofitManager {
 
     @Singleton
     @Provides
-    fun provideLoginApi(retrofit: Retrofit): LandingApi = retrofit.create(LandingApi::class.java)
+    fun provideLandingApi(retrofit: Retrofit): LandingApi = retrofit.create(LandingApi::class.java)
 
     @Singleton
     @Provides

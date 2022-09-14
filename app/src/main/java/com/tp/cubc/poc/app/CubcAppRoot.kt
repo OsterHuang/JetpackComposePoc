@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
+import com.tp.cubc.poc.ui.component.Loading
 import com.tp.cubc.poc.ui.theme.CubcAppTheme
 import kotlinx.coroutines.launch
 
@@ -45,24 +46,7 @@ fun CubcApp() {
         ) {
             CubcAppNavHost(navHostController = navHostController)
 
-            AnimatedVisibility(
-                visible = appViewModel.loading.value > 0,
-                enter = fadeIn(),
-                exit = fadeOut(animationSpec = tween(500))
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color(0x44000000))
-                        .clickable(enabled = false, onClick = {}),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(60.dp).zIndex(5f)
-                    )
-                }
-            }
+            Loading(visible = appViewModel.loading.value > 0)
         }
     }
 }
