@@ -25,7 +25,16 @@ import com.tp.cubc.poc.ui.theme.CubcAppTheme
 import kotlinx.coroutines.launch
 
 /**
- * Adapter層為與view model狀態的橋接
+ * Adapter層為與view model狀態的橋接、api error handle
+ *
+ * 架構想法：
+ * ```
+ *   *. view model 彼此無法相互inject，跨view model的操作還是透過 screen adapter做操作
+ *   *. 統一操作 coroutine 操作來決定哪些api是async哪些是sync, 組裝api流程
+ *   *. API處理結束後，不用透過channel來通知需要後續的操作
+ *   *. 由上述兩點，loading的處理與錯誤處理，這邊處理會比較簡潔與方便。
+ *   *.
+ * ```
  */
 @Composable
 fun LoginScreenAdapter(
