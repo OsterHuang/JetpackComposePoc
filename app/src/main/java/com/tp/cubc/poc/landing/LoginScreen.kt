@@ -24,8 +24,11 @@ import com.tp.cubc.poc.ui.bg.LoginBg
 import com.tp.cubc.poc.ui.theme.CubcAppTheme
 import kotlinx.coroutines.launch
 
+/**
+ * Adapter層為與view model狀態的橋接
+ */
 @Composable
-fun LoginScreen(
+fun LoginScreenAdapter(
     loginViewModel: LoginViewModel,
     goRegister: () -> Unit,
     goApplyMobileBank: () -> Unit,
@@ -44,7 +47,7 @@ fun LoginScreen(
         }
     }
 
-    PureLoginScreen(
+    LoginScreen(
         loginViewModel.username,
         loginViewModel.usermima,
         onChangeUsername = {  loginViewModel.username = it },
@@ -58,9 +61,13 @@ fun LoginScreen(
 
 /**
  * ViewModel無法在Preview中初始化，所以將需要viewModel的元件拆離
+ * 概念為 functional programming - Pure function
  */
 @Composable
-fun PureLoginScreen(
+fun LoginScreen(
+//    isRegistered: Boolean,
+//    isRmemberMe: Boolean,
+//    isBiometricOn: Boolean,
     username: String,
     usermima: String,
     onChangeUsername: (String) -> Unit,
@@ -232,7 +239,7 @@ fun LoginOtherArea() {
 @Composable
 fun PreviewScreen() {
     CubcAppTheme() {
-        PureLoginScreen(
+        LoginScreen(
             username = "",
             "",
             {},

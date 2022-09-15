@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import com.tp.cubc.poc.example.ComponentSampleScreen
 import com.tp.cubc.poc.home.homeGraph
 import com.tp.cubc.poc.landing.LandingRoutes
-import com.tp.cubc.poc.landing.LoginScreen
+import com.tp.cubc.poc.landing.LoginScreenAdapter
 import com.tp.cubc.poc.landing.LoginViewModel
 import com.tp.cubc.poc.landing.SplashScreen
 import com.tp.cubc.poc.landing.applyMobileBank.ApplyMobileBankEntryScreen
@@ -56,7 +56,7 @@ fun CubcAppNavHost(navHostController: NavHostController) {
         }
         composable(LandingRoutes.Login.name) {
             val loginViewModel: LoginViewModel = hiltViewModel() //　只有此畫面使用viewModel沒有流程
-            LoginScreen(
+            LoginScreenAdapter(
                 loginViewModel,
                 goRegister = {
                     goRegister()
