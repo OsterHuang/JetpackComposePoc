@@ -21,40 +21,48 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
+import com.mbanking.cubc.myAccount.repository.dataModel.MyBankAccount
 import com.mbanking.cubc.myAccount.repository.dataModel.QueryAccountInfoResponseBodyResult
 import com.tp.cubc.poc.account.repository.AccountApi
 import com.tp.cubc.poc.account.repository.AccountRemoteDataSource
 import com.tp.cubc.poc.app.CubcAppViewModel
+import com.tp.cubc.poc.transfer.dataModel.BankAccount
+import com.tp.cubc.poc.transfer.dataModel.OtherBank
+import com.tp.cubc.poc.transfer.dataModel.TransferType
 import com.tp.cubc.poc.ui.component.RoundedBorderColumn
 import com.tp.cubc.poc.ui.component.dropdown.DropdownField
 import com.tp.cubc.poc.ui.theme.CubcAppTheme
+import com.tp.cubc.poc.util.constant.CubcCurrency
 import com.tp.cubc.poc.util.http.HttpRequestBody
 import com.tp.cubc.poc.util.http.HttpResponseBody
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import java.math.BigDecimal
 
 
 @Composable
 fun TransferMainTopRegion(
-    transferMainViewModel: TransferMainViewModel,
+    accountList: List<MyBankAccount>,
+    fromAccount: MyBankAccount?,
+    transferToBank: OtherBank?,
+    transferType: TransferType?,
     transferTypeRouter: TransferTypeRouter? = null, // 只有TransferMain需要開啟轉帳類型Dialog
 ) {
     // Computed Values
-    val txtTransferTo = transferMainViewModel.transferToBank.value?.name ?:
-        transferMainViewModel.transferType.value?.name ?: ""
-    val txtTransferType = transferMainViewModel.transferToBank.value?.run {
-        transferMainViewModel.transferType.value?.name ?: " -- "
+    val txtTransferTo = transferToBank?.name ?: transferType?.name ?: ""
+    val txtTransferType = transferToBank?.run {
+        transferType?.name ?: " -- "
     } ?: ""
 
     DropdownField(
-        value = transferMainViewModel.fromAccount.value,
+        value = fromAccount,
         label = { Text("From Account") },
         modifier = Modifier.fillMaxWidth(),
-        items = transferMainViewModel.accountList.value,
-        onValueChange = { transferMainViewModel.fromAccount.value = it }
+        items = accountList,
+        onValueChange = { fromAccount }
     )
-    transferMainViewModel.fromAccount.value?.run {
+    fromAccount?.run {
         Text(
             modifier = Modifier
                 .fillMaxWidth()
@@ -110,24 +118,23 @@ fun TransferMainTopRegion(
 @Composable
 private fun PreviewScreen() {
     val navController = rememberNavController()
-    val transferMainViewModel = TransferMainViewModel(
-        Application(),
-        AccountRemoteDataSource(object: AccountApi {
-            override suspend fun queryAccountInfo(requestBody: HttpRequestBody): Response<HttpResponseBody<QueryAccountInfoResponseBodyResult>> {
-                return Response.success(HttpResponseBody(
-                    "0000",
-                    "Success",
-                    QueryAccountInfoResponseBodyResult(listOf(), listOf(), listOf(), listOf())
-                ))
-            }
-        })
+
+    val accountList = listOf(
+        MyBankAccount("811", "01110110335101", CubcCurrency.USD.name, BigDecimal("2007.15"), "My e-account USD"),
+        MyBankAccount("811", "800443559", CubcCurrency.KHR.name, BigDecimal("300000"), "My e-account USD"),
     )
+    val fromAccount = accountList[1]
+    val transferToBank = OtherBank("台北富邦")
+
+
     CubcAppTheme() {
         RoundedBorderColumn {
             TransferMainTopRegion(
-
-                transferMainViewModel = transferMainViewModel,
-                transferTypeRouter = TransferTypeRouter(navController),
+                accountList = accountList,
+                fromAccount = fromAccount,
+                transferToBank = transferToBank ,
+                transferType = TransferType.Fast,
+                transferTypeRouter = TransferTypeRouter(navController)
             )
         }
     }

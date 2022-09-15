@@ -47,7 +47,10 @@ fun LocalFastInputScreen(
 
             RoundedBorderColumn {
                 TransferMainTopRegion(
-                    transferMainViewModel = transferMainViewModel
+                    accountList = transferMainViewModel.accountList.value,
+                    fromAccount = transferMainViewModel.fromAccount.value,
+                    transferToBank = transferMainViewModel.transferToBank.value,
+                    transferType = transferMainViewModel.transferType.value
                 )
                 Spacer(Modifier.height(12.dp))
 

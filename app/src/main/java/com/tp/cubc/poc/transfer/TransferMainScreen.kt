@@ -16,25 +16,28 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
+import com.mbanking.cubc.myAccount.repository.dataModel.MyBankAccount
 import com.mbanking.cubc.myAccount.repository.dataModel.QueryAccountInfoResponseBodyResult
 import com.tp.cubc.poc.account.repository.AccountApi
 import com.tp.cubc.poc.account.repository.AccountRemoteDataSource
 import com.tp.cubc.poc.app.CubcAppViewModel
+import com.tp.cubc.poc.transfer.dataModel.OtherBank
+import com.tp.cubc.poc.transfer.dataModel.TransferType
 import com.tp.cubc.poc.ui.bg.BasicBg
 import com.tp.cubc.poc.ui.component.BottomButtonArea
 import com.tp.cubc.poc.ui.component.RoundedBorderColumn
 import com.tp.cubc.poc.ui.component.TopBarTitleText
 import com.tp.cubc.poc.ui.theme.CubcAppTheme
+import com.tp.cubc.poc.util.constant.CubcCurrency
 import com.tp.cubc.poc.util.http.HttpRequestBody
 import com.tp.cubc.poc.util.http.HttpResponseBody
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import java.math.BigDecimal
 
-
-@OptIn(FlowPreview::class)
 @Composable
-fun TransferMainScreen(
+fun TransferMainScreenAdapter(
     transferMainViewModel: TransferMainViewModel,
     transferTypeRouter: TransferTypeRouter,
 ) {
@@ -50,9 +53,25 @@ fun TransferMainScreen(
 
         transferMainViewModel.transferToBank.value = null
         transferMainViewModel.transferType.value = null
-
     }
 
+    TransferMainScreen(
+        accountList = transferMainViewModel.accountList.value,
+        fromAccount = transferMainViewModel.fromAccount.value,
+        transferToBank = transferMainViewModel.transferToBank.value,
+        transferType = transferMainViewModel.transferType.value,
+        transferTypeRouter = transferTypeRouter,
+    )
+}
+
+@Composable
+fun TransferMainScreen(
+    accountList: List<MyBankAccount>,
+    fromAccount: MyBankAccount?,
+    transferToBank: OtherBank?,
+    transferType: TransferType?,
+    transferTypeRouter: TransferTypeRouter? = null, // 只有TransferMain需要開啟轉帳類型Dialog
+){
     BasicBg {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -64,12 +83,15 @@ fun TransferMainScreen(
                 elevation = 12.dp
             )
 
-           RoundedBorderColumn {
+            RoundedBorderColumn {
                 TransferMainTopRegion(
-                    transferMainViewModel = transferMainViewModel,
-                    transferTypeRouter = transferTypeRouter,
+                    accountList,
+                    fromAccount,
+                    transferToBank,
+                    transferType,
+                    transferTypeRouter
                 )
-               Spacer(Modifier.height(12.dp))
+                Spacer(Modifier.height(12.dp))
             }
 
             Spacer(Modifier.weight(1f))
@@ -92,22 +114,21 @@ fun TransferMainScreen(
 @Composable
 private fun PreviewScreen() {
     val navController = rememberNavController()
-    val transferMainViewModel = TransferMainViewModel(
-        Application(),
-        AccountRemoteDataSource(object: AccountApi {
-            override suspend fun queryAccountInfo(requestBody: HttpRequestBody): Response<HttpResponseBody<QueryAccountInfoResponseBodyResult>> {
-                return Response.success(HttpResponseBody(
-                    "0000",
-                    "Success",
-                    QueryAccountInfoResponseBodyResult(listOf(), listOf(), listOf(), listOf())
-                ))
-            }
-        })
+
+    val accountList = listOf(
+        MyBankAccount("811", "01110110335101", CubcCurrency.USD.name, BigDecimal("2007.15"), "My e-account USD"),
+        MyBankAccount("811", "800443559", CubcCurrency.KHR.name, BigDecimal("300000"), "MY KHR E-acc"),
     )
+    val fromAccount = accountList[1]
+    val transferToBank = OtherBank("台北富邦")
+
     CubcAppTheme() {
         TransferMainScreen(
-            transferMainViewModel,
-            TransferTypeRouter(navController),
+            accountList = accountList,
+            fromAccount = fromAccount,
+            transferToBank = transferToBank,
+            transferType = TransferType.Bakong,
+            transferTypeRouter = TransferTypeRouter(navController),
         )
     }
 }

@@ -74,7 +74,7 @@ fun NavGraphBuilder.transferGraph(navController: NavController) {
     navigation(TransferRoutes.TransferMain.name, TransferRoutes.TransferIndex.name) {
         composable(TransferRoutes.TransferMain.name) {
             val transferMainViewModel = hiltViewModel<TransferMainViewModel>()
-            TransferMainScreen(transferMainViewModel = transferMainViewModel, transferTypeRouter = transferTypesRouter)
+            TransferMainScreenAdapter(transferMainViewModel = transferMainViewModel, transferTypeRouter = transferTypesRouter)
         }
         transferTypeGraph(
             routeName = TransferTypeRoutes.TransferTypeIndex.name,
