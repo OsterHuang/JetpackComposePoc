@@ -9,15 +9,16 @@ object RemoteDataSourceUtil {
     /**
      * 呼叫API並且將Response轉換成Result
      */
-    suspend fun <RES_BODY_RESULT>wrapBodyResult(
-        block: suspend () -> Response<HttpResponseBody<RES_BODY_RESULT>>,
-    ): Result<RES_BODY_RESULT> {
+    suspend fun <RES_BODY>wrapBody(
+        block: suspend () -> Response<HttpResponseBody<RES_BODY>>,
+    ): Result<HttpResponseBody<RES_BODY>> {
         return withContext(Dispatchers.IO) {
             try {
                 val response = block.invoke()
+
                 if (response.isSuccessful && response.body() != null && response.body()?.msgCode == ApiReturnCode.Success.code) {
                     Result.success(
-                        response.body()!!.result
+                        response.body()!!  // Already pre-check at the if condition
                     )
                 } else {
                     if (response.body() != null) {
@@ -39,15 +40,15 @@ object RemoteDataSourceUtil {
     /**
      * 呼叫API並且將Response轉換成Result
      */
-    suspend fun <RES_BODY>wrapBody(
-        block: suspend () -> Response<HttpResponseBody<RES_BODY>>,
-    ): Result<HttpResponseBody<RES_BODY>> {
+    suspend fun <RES_BODY_RESULT>wrapBodyResult(
+        block: suspend () -> Response<HttpResponseBody<RES_BODY_RESULT>>,
+    ): Result<RES_BODY_RESULT> {
         return withContext(Dispatchers.IO) {
             try {
                 val response = block.invoke()
                 if (response.isSuccessful && response.body() != null && response.body()?.msgCode == ApiReturnCode.Success.code) {
                     Result.success(
-                        response.body()!!
+                        response.body()!!.result // Already pre-check at the if condition
                     )
                 } else {
                     if (response.body() != null) {
@@ -56,7 +57,7 @@ object RemoteDataSourceUtil {
                         )
                     } else {
                         Result.failure(
-                            ApiError(response.code().toString(), ApiReturnCode.NoResponse.code)
+                            ApiError(response.code().toString(), ApiReturnCode.NoResponseBody.code)
                         )
                     }
                 }

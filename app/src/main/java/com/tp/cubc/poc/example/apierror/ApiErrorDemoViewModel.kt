@@ -1,6 +1,7 @@
 package com.tp.cubc.poc.example.apierror
 
 import androidx.lifecycle.ViewModel
+import com.mbanking.cubc.myAccount.repository.dataModel.NoErrorResponseBodyResult
 import com.tp.cubc.poc.TAG
 import com.tp.cubc.poc.landing.repository.ApiErrorDemoRemoteDataSource
 import com.tp.cubc.poc.util.http.HttpResponseBody
@@ -14,11 +15,11 @@ class ApiErrorDemoViewModel @Inject constructor(
 ): ViewModel() {
     private val tag = TAG
 
-    suspend fun inquiryHasError(): Result<HttpResponseBody<HttpResponseBodyResultEmpty>> {
-        return dataSource.inquiryHasError()
+    suspend fun inquiryNoError(): Result<HttpResponseBody<NoErrorResponseBodyResult>> {
+        return dataSource.inquiryNoError()
     }
 
-    suspend fun inquiryNoError(): Result<HttpResponseBody<HttpResponseBodyResultEmpty>> {
-        return dataSource.inquiryNoError()
+    suspend fun inquiryHasError(): Result<HttpResponseBody<HttpResponseBodyResultEmpty>> {
+        return dataSource.inquiryHasError()
     }
 }

@@ -1,5 +1,6 @@
 package com.tp.cubc.poc.landing.repository
 
+import com.mbanking.cubc.myAccount.repository.dataModel.NoErrorResponseBodyResult
 import com.tp.cubc.poc.util.http.HttpRequestBody
 import com.tp.cubc.poc.util.http.HttpResponseBody
 import com.tp.cubc.poc.util.http.HttpResponseBodyResultEmpty
@@ -9,7 +10,7 @@ import javax.inject.Inject
 class ApiErrorDemoRemoteDataSource @Inject constructor(
     private val api: ApiErrorDemoApi
 ) {
-    suspend fun inquiryNoError(): Result<HttpResponseBody<HttpResponseBodyResultEmpty>> {
+    suspend fun inquiryNoError(): Result<HttpResponseBody<NoErrorResponseBodyResult>> {
         return RemoteDataSourceUtil.wrapBody {
             api.noError(HttpRequestBody("inquiryNoError"))
         }
@@ -17,7 +18,7 @@ class ApiErrorDemoRemoteDataSource @Inject constructor(
 
     suspend fun inquiryHasError(): Result<HttpResponseBody<HttpResponseBodyResultEmpty>> {
         return RemoteDataSourceUtil.wrapBody {
-            api.noError(HttpRequestBody("inquiryHasError"))
+            api.hasError(HttpRequestBody("inquiryHasError"))
         }
     }
 }

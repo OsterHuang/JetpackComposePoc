@@ -1,8 +1,6 @@
 package com.tp.cubc.poc.landing.repository
 
-import com.mbanking.cubc.login.repository.dataModel.LoginRequestBody
-import com.tp.cubc.poc.landing.repository.dataModel.AccessTokenResponse
-import com.tp.cubc.poc.landing.repository.dataModel.LoginResponseBodyResult
+import com.mbanking.cubc.myAccount.repository.dataModel.NoErrorResponseBodyResult
 import com.tp.cubc.poc.util.http.HttpRequestBody
 import com.tp.cubc.poc.util.http.HttpResponseBody
 import com.tp.cubc.poc.util.http.HttpResponseBodyResultEmpty
@@ -15,7 +13,7 @@ interface ApiErrorDemoApi {
     @POST("error-sample/no-error")
     suspend fun noError(
         @Body requestBody: HttpRequestBody
-    ): Response<HttpResponseBody<HttpResponseBodyResultEmpty>>
+    ): Response<HttpResponseBody<NoErrorResponseBodyResult>>
 
 
     @POST("error-sample/has-error")
