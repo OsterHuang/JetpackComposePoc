@@ -3,6 +3,7 @@ package com.tp.cubc.poc.util.http
 import com.tp.cubc.poc.BuildConfig
 import com.tp.cubc.poc.TAG
 import com.tp.cubc.poc.account.repository.AccountApi
+import com.tp.cubc.poc.landing.repository.ApiErrorDemoApi
 import com.tp.cubc.poc.landing.repository.LandingApi
 import com.tp.cubc.poc.util.constant.CubcConstant.Companion.LOADING_PENDING_TIMEOUT
 import dagger.Module
@@ -50,9 +51,9 @@ object RetrofitManager {
             .addConverterFactory(GsonConverterFactory.create())
             .client(
                 OkHttpClient.Builder()
-                    .connectTimeout(LOADING_PENDING_TIMEOUT, TimeUnit.MICROSECONDS)
-                    .writeTimeout(LOADING_PENDING_TIMEOUT, TimeUnit.MICROSECONDS)
-                    .readTimeout(LOADING_PENDING_TIMEOUT, TimeUnit.MICROSECONDS)
+                    .connectTimeout(LOADING_PENDING_TIMEOUT, TimeUnit.MILLISECONDS)
+                    .writeTimeout(LOADING_PENDING_TIMEOUT, TimeUnit.MILLISECONDS)
+                    .readTimeout(LOADING_PENDING_TIMEOUT, TimeUnit.MILLISECONDS)
                     .addInterceptor(HttpHeaderInterceptor())
                     .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                     .build()
@@ -69,4 +70,7 @@ object RetrofitManager {
     @Provides
     fun provideAccountApi(retrofit: Retrofit): AccountApi = retrofit.create(AccountApi::class.java)
 
+    @Singleton
+    @Provides
+    fun provideApiErrorDemoApi(retrofit: Retrofit): ApiErrorDemoApi = retrofit.create(ApiErrorDemoApi::class.java)
 }

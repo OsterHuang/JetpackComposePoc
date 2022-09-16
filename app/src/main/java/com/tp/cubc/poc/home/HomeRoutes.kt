@@ -50,13 +50,17 @@ fun NavGraphBuilder.homeGraph(
     val goUiExample = {
         navController.navigate("ComponentSampleScreen")
     }
+    val goApiErrorDemo = {
+        navController.navigate("ApiErrorDemoScreen")
+    }
 
     navigation(HomeRoutes.Home.name, LandingRoutes.HomeIndex.name) {
         composable(HomeRoutes.Home.name) {
             HomeScreen(
                 homeRouter,
                 goTransfer,
-                goUiExample
+                goUiExample,
+                goApiErrorDemo
             )
         }
         myAccountGraph(navController, homeRouter)

@@ -9,7 +9,7 @@ object RemoteDataSourceUtil {
     /**
      * 呼叫API並且將Response轉換成Result
      */
-    suspend fun <RES_BODY_RESULT>wrapHttpResponse(
+    suspend fun <RES_BODY_RESULT>wrapBodyResult(
         block: suspend () -> Response<HttpResponseBody<RES_BODY_RESULT>>,
     ): Result<RES_BODY_RESULT> {
         return withContext(Dispatchers.IO) {
@@ -18,6 +18,36 @@ object RemoteDataSourceUtil {
                 if (response.isSuccessful && response.body() != null && response.body()?.msgCode == ApiReturnCode.Success.code) {
                     Result.success(
                         response.body()!!.result
+                    )
+                } else {
+                    if (response.body() != null) {
+                        Result.failure(
+                            ApiError(response.body()?.msgCode, response.body()?.msgContent)
+                        )
+                    } else {
+                        Result.failure(
+                            ApiError(response.code().toString(), ApiReturnCode.NoResponse.code)
+                        )
+                    }
+                }
+            } catch (throwable: Throwable) {
+                Result.failure(throwable)
+            }
+        }
+    }
+
+    /**
+     * 呼叫API並且將Response轉換成Result
+     */
+    suspend fun <RES_BODY>wrapBody(
+        block: suspend () -> Response<HttpResponseBody<RES_BODY>>,
+    ): Result<HttpResponseBody<RES_BODY>> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = block.invoke()
+                if (response.isSuccessful && response.body() != null && response.body()?.msgCode == ApiReturnCode.Success.code) {
+                    Result.success(
+                        response.body()!!
                     )
                 } else {
                     if (response.body() != null) {

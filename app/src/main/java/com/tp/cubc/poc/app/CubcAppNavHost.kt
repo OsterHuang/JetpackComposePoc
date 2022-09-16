@@ -82,7 +82,7 @@ fun CubcAppNavHost(navHostController: NavHostController) {
         composable("ComponentSampleScreen") {
             ComponentSampleScreen()
         }
-        composable("ComponentSampleScreen") {
+        composable("ApiErrorDemoScreen") {
             ApiErrorDemoScreen()
         }
     }

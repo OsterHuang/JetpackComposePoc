@@ -23,7 +23,7 @@ import androidx.compose.ui.zIndex
 import com.tp.cubc.poc.ui.theme.CubcAppTheme
 
 @Composable
-fun Loading(visible: Boolean) {
+fun Loading(visible: Boolean = false) {
     AnimatedVisibility(
         visible = visible,
         enter = fadeIn(),

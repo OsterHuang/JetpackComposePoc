@@ -9,7 +9,7 @@ class AccountRemoteDataSource @Inject constructor(
     private val api: AccountApi
 ) {
     suspend fun queryAccountInfo(): Result<QueryAccountInfoResponseBodyResult> {
-        return RemoteDataSourceUtil.wrapHttpResponse<QueryAccountInfoResponseBodyResult> {
+        return RemoteDataSourceUtil.wrapBodyResult<QueryAccountInfoResponseBodyResult> {
             api.queryAccountInfo(HttpRequestBody("queryAccountInfo"))
         }
     }

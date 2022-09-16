@@ -20,7 +20,7 @@ import javax.inject.Inject
 @FlowPreview
 @HiltViewModel
 class CubcAppViewModel @Inject constructor(
-    private val landingRemoteDataSource: LandingRemoteDataSource
+    private val dataSource: LandingRemoteDataSource
 ): ViewModel() {
     private val tag = TAG
 
@@ -43,7 +43,7 @@ class CubcAppViewModel @Inject constructor(
     }
     
     suspend fun requireAccessToken() {
-        val result: Result<AccessTokenResponse> = landingRemoteDataSource.accessToken()
+        val result: Result<AccessTokenResponse> = dataSource.accessToken()
         MainApplication.instance.cubcAppData.token = result.getOrNull()?.accessToken
     }
 }

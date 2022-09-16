@@ -21,7 +21,8 @@ import com.tp.cubc.poc.ui.theme.CubcAppTheme
 fun HomeScreen(
     homeIndexRouter: HomeIndexRouter,
     goTransfer: () -> Unit,
-    goUiExample: () -> Unit
+    goUiExample: () -> Unit,
+    goApiErrorDemo: () -> Unit,
 ) {
     HomeLayout(
         noWhiteTree = false,
@@ -34,11 +35,15 @@ fun HomeScreen(
         Button(onClick = goTransfer) {
             Text("Go Transfer")
         }
-
         Spacer(Modifier.height(24.dp))
 
         Button(onClick = goUiExample) {
             Text("Go UI Examples")
+        }
+        Spacer(Modifier.height(24.dp))
+
+        Button(onClick = goApiErrorDemo) {
+            Text("Go API Error demo")
         }
     }
 }
@@ -53,7 +58,7 @@ private fun PreviewScreen() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colors.background
         ) {
-            HomeScreen(HomeIndexRouter(navController), {}) {}
+            HomeScreen(HomeIndexRouter(navController), {}, {}) {}
         }
     }
 }
