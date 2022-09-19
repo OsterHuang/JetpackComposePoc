@@ -46,25 +46,7 @@ fun CubcApp() {
         ) {
             CubcAppNavHost(navHostController = navHostController)
 
-            AnimatedVisibility(
-                visible = appViewModel.loading.value > 0,
-                enter = fadeIn(),
-                exit = fadeOut(animationSpec = tween(500))
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color(0x44000000))
-                        .clickable(enabled = false, onClick = {}),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(60.dp).zIndex(5f)
-                    )
-                }
-            }
-//            Loading(visible = appViewModel.loading.value > 0)
+            Loading(visible = appViewModel.loading.value > 0)
         }
     }
 }
