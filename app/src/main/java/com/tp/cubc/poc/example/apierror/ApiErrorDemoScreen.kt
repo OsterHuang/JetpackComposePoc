@@ -9,15 +9,15 @@ import androidx.compose.material.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tp.cubc.poc.app.CubcAppViewModel
 import com.tp.cubc.poc.example.apierror.ApiErrorDemoViewModel
 import com.tp.cubc.poc.ui.bg.BasicBg
-import com.tp.cubc.poc.ui.component.*
-import com.tp.cubc.poc.ui.theme.CubcAppTheme
+import com.tp.cubc.poc.ui.component.RoundedBorderColumn
+import com.tp.cubc.poc.ui.component.TopBarTitleText
+import com.tp.cubc.poc.util.http.CubcApiErrorCentral
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.launch
 
@@ -30,8 +30,6 @@ fun ApiErrorDemoScreen() {
             TopBarTitleText(text = "API ERROR Case Demo")
 
             CommonErrorArea()
-            CustomErrorArea()
-            RedBorderErrorArea()
         }
     }
 }
@@ -40,6 +38,7 @@ fun ApiErrorDemoScreen() {
 @Composable
 fun CommonErrorArea() {
     val appViewModel: CubcAppViewModel = viewModel(LocalContext.current as ComponentActivity)
+    // 範例要呼API所以使用viewModel
     val apiErrorDemoViewModel: ApiErrorDemoViewModel = hiltViewModel()
 
     var value by remember{ mutableStateOf("") }
@@ -50,8 +49,9 @@ fun CommonErrorArea() {
         coroutineScope.launch {
             appViewModel.loading.value++
             val result = apiErrorDemoViewModel.inquiryNoError()
-            value = result.getOrNull()!!.result.name
             appViewModel.loading.value--
+
+            value = result.getOrNull()!!.result.name
         }
     }
 
@@ -59,8 +59,24 @@ fun CommonErrorArea() {
         coroutineScope.launch {
             appViewModel.loading.value++
             val result = apiErrorDemoViewModel.inquiryHasError()
-            valueError = result.exceptionOrNull()!!.message ?: "Unknown Error"
             appViewModel.loading.value--
+
+            valueError = result.exceptionOrNull()!!.message ?: "Unknown Error"
+        }
+    }
+
+    val errorHandlerProducer = CubcApiErrorCentral()
+    val onClickGlobalError = fun() {
+        coroutineScope.launch {
+            appViewModel.loading.value++
+            val result = apiErrorDemoViewModel.inquiryHasError()
+            appViewModel.loading.value--
+
+            errorHandlerProducer.newHandler(coroutineScope, result)
+                .handleCommonError(onClickNoError)
+                .handleCommonError()
+
+            valueError = result.exceptionOrNull()!!.message ?: "Unknown Error"
         }
     }
 
@@ -68,9 +84,21 @@ fun CommonErrorArea() {
         Text("Common Error to Default Alert")
         TextField(value = value, onValueChange = { value = it })
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround) {
-            Button(modifier = Modifier.weight(1f), onClick = onClickNoError ) { Text("API No Error") }
+            Button(modifier = Modifier.weight(1f), onClick = onClickNoError ) { Text("Global Error Case") }
             Spacer(modifier = Modifier.width(10.dp))
-            Button(modifier = Modifier.weight(1f), onClick = onClickHasError ) { Text("API Error") }
+            Button(modifier = Modifier.weight(1f), onClick = onClickGlobalError ) { Text("Common Err Callback") }
+        }
+
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround) {
+            Button(modifier = Modifier.weight(1f), onClick = {} ) { Text("No Error") }
+            Spacer(modifier = Modifier.width(10.dp))
+            Button(modifier = Modifier.weight(1f), onClick = {} ) { Text("Common Error") }
+        }
+
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround) {
+            Button(modifier = Modifier.weight(1f), onClick = {} ) { Text("Customized Error Dialog") }
+            Spacer(modifier = Modifier.width(10.dp))
+            Button(modifier = Modifier.weight(1f), onClick = {} ) { Text("Red border") }
         }
     }
 
@@ -85,40 +113,6 @@ fun CommonErrorArea() {
                 Button(onClick = { valueError = ""; value = "" }) { Text("Cancel") }
             },
         )
-    }
-}
-
-@Composable
-fun CustomErrorArea() {
-    var value by remember{ mutableStateOf("") }
-    var valueError by remember{ mutableStateOf("") }
-
-    RoundedBorderColumn() {
-        Text("Customized Error to Custom Alert")
-        TextField(value = value, onValueChange = { value = it })
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround) {
-            Button(modifier = Modifier.weight(1f), onClick = { /*TODO*/ }) { Text("API No Error") }
-            Spacer(modifier = Modifier.width(10.dp))
-            Button(modifier = Modifier.weight(1f), onClick = { /*TODO*/ }) { Text("API Error") }
-        }
-        ErrorMessage(text = valueError)
-    }
-}
-
-@Composable
-fun RedBorderErrorArea() {
-    var value by remember{ mutableStateOf("") }
-    var valueError by remember{ mutableStateOf("") }
-
-    RoundedBorderColumn() {
-        Text("Red border Error to Custom Alert")
-        TextField(value = value, onValueChange = { value = it })
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround) {
-            Button(modifier = Modifier.weight(1f), onClick = { /*TODO*/ }) { Text("API No Error") }
-            Spacer(modifier = Modifier.width(10.dp))
-            Button(modifier = Modifier.weight(1f), onClick = { /*TODO*/ }) { Text("API Error") }
-        }
-        ErrorMessage(text = valueError)
     }
 }
 
