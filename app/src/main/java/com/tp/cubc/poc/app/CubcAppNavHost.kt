@@ -5,7 +5,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.tp.cubc.poc.example.ApiErrorDemoScreen
+import com.tp.cubc.poc.example.apierror.ApiErrorDemoScreen
 import com.tp.cubc.poc.example.ComponentSampleScreen
 import com.tp.cubc.poc.home.homeGraph
 import com.tp.cubc.poc.landing.LandingRoutes
@@ -83,7 +83,7 @@ fun CubcAppNavHost(navHostController: NavHostController) {
             ComponentSampleScreen()
         }
         composable("ApiErrorDemoScreen") {
-            ApiErrorDemoScreen()
+            ApiErrorDemoScreen { goHome() }
         }
     }
 }

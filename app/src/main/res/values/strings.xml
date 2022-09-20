@@ -7,6 +7,11 @@
     <string name="splash_copyright">Powered by Cathay United Bank Cambodia.\n© All rights reserved.</string>
     <string name="login">Login</string>
 
+    <!-- Common Error -->
+    <string name="http_throwable_io">Something went wrong, please try again.</string>
+    <string name="http_throwable_http">Something went wrong, please try again.</string>
+    <string name="http_throwable_unknown_host">Cannot access server, please try again later.</string>
+
     <!-- Register -->
     <string name="register">Register</string>
     <string name="register_terms">Register Terms</string>

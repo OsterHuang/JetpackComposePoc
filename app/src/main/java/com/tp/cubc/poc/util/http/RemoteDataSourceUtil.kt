@@ -1,13 +1,19 @@
 package com.tp.cubc.poc.util.http
 
+import androidx.compose.ui.res.stringResource
+import com.tp.cubc.poc.R
 import com.tp.cubc.poc.util.constant.ApiReturnCode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import retrofit2.HttpException
 import retrofit2.Response
+import java.io.IOException
+import java.net.UnknownHostException
 
 object RemoteDataSourceUtil {
     /**
      * 呼叫API並且將Response轉換成Result
+     * 所有error, exception都轉成 ApiError
      */
     suspend fun <RES_BODY>wrapBody(
         block: suspend () -> Response<HttpResponseBody<RES_BODY>>,
@@ -66,4 +72,5 @@ object RemoteDataSourceUtil {
             }
         }
     }
+
 }

@@ -11,3 +11,14 @@ class ApiError(var msgCode: String?, var msgContent: String?) : Exception() {
         }
     }
 }
+
+fun <T>Result<T>.apiErrorMessage(): String {
+    return when (val exception = this.exceptionOrNull()) {
+        is ApiError -> {
+            exception.msgContent ?: "Unknown Error"
+        }
+        else -> {
+            return "Unexpected Error"
+        }
+    }
+}
